@@ -1,41 +1,41 @@
 {
   "expo": {
-    "name": "ayurvedic-self-med-app",
-    "slug": "ayurvedic-self-med-app",
+    "name": "Charya Ayurveda",
+    "slug": "charya-ayurveda",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/adaptive-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.charyaayurveda.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.charyaayurveda.app"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2bba0a1d-d613-485e-86f1-6c86e0b157e0"
       }
     },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+    "owner": "rohitrathod_9",
+    "runtimeVersion": {
+      "policy": "appVersion"
     },
-    "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ]
-    ],
-    "experiments": {
-      "typedRoutes": true
+    "updates": {
+      "url": "https://u.expo.dev/2bba0a1d-d613-485e-86f1-6c86e0b157e0"
     }
   }
 }

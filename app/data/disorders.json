@@ -1,0 +1,64 @@
+{
+	"disorders": [
+		{
+			"id": 1,
+			"name": "संधिवात (Arthritis)",
+			"description": "सांध्यांमध्ये सूज आणि वेदना",
+			"category": "अस्थिरोग"
+		},
+		{
+			"id": 2,
+			"name": "मधुमेह (Diabetes)",
+			"description": "रक्तातील साखरेचे प्रमाण नियंत्रित न राहणे",
+			"category": "चयापचय विकार"
+		},
+		{
+			"id": 3,
+			"name": "दमा (Asthma)",
+			"description": "श्वसनाचा त्रास",
+			"category": "श्वसन रोग"
+		},
+		{
+			"id": 4,
+			"name": "रक्तदाब (Hypertension)",
+			"description": "उच्च रक्तदाब",
+			"category": "हृदयरोग"
+		},
+		{
+			"id": 5,
+			"name": "अम्लपित्त (Acidity)",
+			"description": "पोटात जळजळ होणे",
+			"category": "पचन विकार"
+		},
+		{
+			"id": 6,
+			"name": "त्वचारोग (Skin Disorders)",
+			"description": "त्वचेचे विविध विकार",
+			"category": "त्वचारोग"
+		},
+		{
+			"id": 7,
+			"name": "अनिद्रा (Insomnia)",
+			"description": "झोप न येण्याची समस्या",
+			"category": "मानसिक विकार"
+		},
+		{
+			"id": 8,
+			"name": "मूत्रखडा (Kidney Stones)",
+			"description": "मूत्रपिंडात खडे होणे",
+			"category": "मूत्रपिंड विकार"
+		},
+		{
+			"id": 9,
+			"name": "थायरॉईड (Thyroid)",
+			"description": "थायरॉईड ग्रंथीचे विकार",
+			"category": "अंतःस्रावी विकार"
+		},
+		{
+			"id": 10,
+			"name": "कब्जियत (Constipation)",
+			"description": "मलावरोध",
+			"category": "पचन विकार"
+		}
+	]
+}
