@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
   container: {
     margin: 16,
     elevation: 4,
+    backgroundColor: '#FFFFFF',
     borderRadius: 12,
     overflow: 'hidden',
   },
