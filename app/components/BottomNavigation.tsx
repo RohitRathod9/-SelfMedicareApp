@@ -10,8 +10,10 @@ export default function BottomNavigation() {
 	const routes = [
 		{ key: 'home', title: 'Home', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
 		{ key: 'disorders', title: 'Disorders', focusedIcon: 'magnify', unfocusedIcon: 'magnify' },
-		{ key: 'prakriti', title: 'Prakriti', focusedIcon: 'account-heart', unfocusedIcon: 'account-heart-outline' },
+		{ key: 'prakruti', title: 'Prakruti', focusedIcon: 'account-heart', unfocusedIcon: 'account-heart-outline' },
 		{ key: 'advice', title: 'Advice', focusedIcon: 'doctor', unfocusedIcon: 'doctor' },
+		{ key: 'diet', title: 'Diet', focusedIcon: 'diet', unfocusedIcon: 'diet' },
+		{ key: 'importance', title: 'Importance', focusedIcon: 'ayurveda', unfocusedIcon: 'ayurveda' },
 	];
 
 	const getRouteIndex = () => {

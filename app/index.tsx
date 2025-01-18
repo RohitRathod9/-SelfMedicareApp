@@ -42,10 +42,10 @@ export default function Index() {
 			>
 				<Animated.View style={[styles.content, { opacity: fadeAnim }]}>
 					<Text variant="displayLarge" style={styles.title}>
-						Ayurvedic Self Care
+						Ayurveda for Life
 					</Text>
 					<Text variant="titleLarge" style={styles.subtitle}>
-						Ancient Wisdom for Modern Wellness
+					Harmony through Ayurveda
 					</Text>
 					<TouchableOpacity
 						onPress={() => router.push('/home')}

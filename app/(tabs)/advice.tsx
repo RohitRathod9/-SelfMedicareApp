@@ -1,29 +1,35 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, ImageBackground, Linking } from 'react-native';
-import { Text, Card, Button, Avatar, Divider } from 'react-native-paper';
+import { View, StyleSheet, ScrollView, ImageBackground, Linking, Platform } from 'react-native';
+import { Text, Card, Button, Avatar, Divider, IconButton } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
+
+// Assuming the declaration file for MaterialIcons has been added or installed
+// If not, follow the instructions in the lint context to fix the issue
 
 const doctors = [
 	{
 		id: 1,
-		name: "Dr. Rajesh Kumar",
+		name: "Dr. Sangharsh Dhiwar",
 		specialization: "Ayurvedic Physician",
-		experience: "15+ years",
-		location: "Mumbai, Maharashtra",
+		experience: "2+ years",
+		location: "Ahmadnagar, Maharashtra",
 		contact: "+91 98765 43210"
 	},
 	{
 		id: 2,
-		name: "Dr. Priya Sharma",
+		name: "Dr. Prajit Kolhe",
 		specialization: "Panchakarma Specialist",
-		experience: "12+ years",
-		location: "Delhi, NCR",
+		experience: "2+ years",
+		location: "Pune, Maharashtra",
 		contact: "+91 98765 43211"
 	}
 	
 ];
 
 export default function PersonalAdvice() {
+	const navigation = useNavigation();
+
 	const handleCall = (phoneNumber: string) => {
 		Linking.openURL(`tel:${phoneNumber}`);
 	};
@@ -118,6 +124,7 @@ const styles = StyleSheet.create({
 		backgroundColor: 'rgba(11, 59, 45, 0.6)',
 		justifyContent: 'flex-end',
 		padding: 16,
+		paddingTop: Platform.OS === 'ios' ? 40 : 32,
 	},
 	headerTitle: {
 		color: 'white',
@@ -205,5 +212,14 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		fontFamily: 'Poppins-Bold',
 		color: '#D4B895',
+	},
+	headerContent: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		paddingHorizontal: 8,
+		marginBottom: 16,
+	},
+	menuButton: {
+		margin: 0,
 	},
 });

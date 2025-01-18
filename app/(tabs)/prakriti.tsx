@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, ImageBackground } from 'react-native';
-import { Text, Card, RadioButton, Button } from 'react-native-paper';
+import { View, StyleSheet, ScrollView, ImageBackground, Platform } from 'react-native';
+import { Text, Card, RadioButton, Button, IconButton } from 'react-native-paper';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 interface Question {
 	id: number;
@@ -114,35 +116,66 @@ const prakritiDescriptions = {
 	}
 };
 
-export default function PrakritiParikshan() {
+export default function PrakritiScreen() {
 	const [answers, setAnswers] = useState<{ [key: number]: string }>({});
-	const [result, setResult] = useState<string | null>(null);
+	const [showResult, setShowResult] = useState(false);
+	const [prakritiType, setPrakritiType] = useState<'vata' | 'pitta' | 'kapha' | null>(null);
+	const navigation = useNavigation();
 
 	const handleAnswer = (questionId: number, value: string) => {
-		setAnswers({ ...answers, [questionId]: value });
+		setAnswers(prev => ({
+			...prev,
+			[questionId]: value
+		}));
 	};
 
-	const analyzePrakriti = () => {
+	const calculatePrakriti = () => {
+		if (Object.keys(answers).length < questions.length) {
+			// Show alert if not all questions are answered
+			alert('कृपया सर्व प्रश्नांची उत्तरे द्या');
+			return;
+		}
+
 		let vataCount = 0;
 		let pittaCount = 0;
 		let kaphaCount = 0;
 
-		Object.entries(answers).forEach(([_, choice]) => {
-			const selectedChoice = questions
-				.flatMap(q => q.choices)
-				.find(c => c.value === choice);
-
+		// Count the number of each dosha type selected
+		questions.forEach(question => {
+			const selectedChoice = question.choices.find(
+				choice => choice.value === answers[question.id]
+			);
 			if (selectedChoice) {
-				if (selectedChoice.type === 'vata') vataCount++;
-				if (selectedChoice.type === 'pitta') pittaCount++;
-				if (selectedChoice.type === 'kapha') kaphaCount++;
+				switch (selectedChoice.type) {
+					case 'vata':
+						vataCount++;
+						break;
+					case 'pitta':
+						pittaCount++;
+						break;
+					case 'kapha':
+						kaphaCount++;
+						break;
+				}
 			}
 		});
 
-		const maxCount = Math.max(vataCount, pittaCount, kaphaCount);
-		if (maxCount === vataCount) setResult('vata');
-		else if (maxCount === pittaCount) setResult('pitta');
-		else setResult('kapha');
+		// Determine dominant prakriti
+		if (vataCount >= pittaCount && vataCount >= kaphaCount) {
+			setPrakritiType('vata');
+		} else if (pittaCount >= vataCount && pittaCount >= kaphaCount) {
+			setPrakritiType('pitta');
+		} else {
+			setPrakritiType('kapha');
+		}
+
+		setShowResult(true);
+	};
+
+	const handleReset = () => {
+		setAnswers({});
+		setShowResult(false);
+		setPrakritiType(null);
 	};
 
 	return (
@@ -173,57 +206,79 @@ export default function PrakritiParikshan() {
 					</Card.Content>
 				</Card>
 
-				{questions.map((question) => (
-					<Card key={question.id} style={styles.questionCard}>
-						<Card.Content>
-							<Text variant="titleMedium" style={styles.question}>
-								{question.text}
-							</Text>
-							<RadioButton.Group
-								onValueChange={(value) => handleAnswer(question.id, value)}
-								value={answers[question.id] || ''}
+				{!showResult ? (
+					<>
+						{questions.map((question) => (
+							<Card key={question.id} style={styles.questionCard}>
+								<Card.Content>
+									<Text variant="titleMedium" style={styles.question}>
+										{question.text}
+									</Text>
+									<RadioButton.Group
+										onValueChange={(value) => handleAnswer(question.id, value)}
+										value={answers[question.id] || ''}
+									>
+										{question.choices.map((choice) => (
+											<RadioButton.Item
+												key={choice.value}
+												label={choice.text}
+												value={choice.value}
+												style={styles.radioItem}
+												labelStyle={styles.radioLabel}
+												color="#0B3B2D"
+											/>
+										))}
+									</RadioButton.Group>
+								</Card.Content>
+							</Card>
+						))}
+
+						<View style={styles.buttonContainer}>
+							<Button
+								mode="contained"
+								onPress={calculatePrakriti}
+								style={styles.button}
+								contentStyle={styles.buttonContent}
+								labelStyle={styles.buttonLabel}
 							>
-								{question.choices.map((choice) => (
-									<RadioButton.Item
-										key={choice.value}
-										label={choice.text}
-										value={choice.value}
-										style={styles.radioItem}
-										labelStyle={styles.radioLabel}
-										color="#0B3B2D"
-									/>
-								))}
-							</RadioButton.Group>
-						</Card.Content>
-					</Card>
-				))}
+								माझी प्रकृती तपासा
+							</Button>
 
-				<Button
-					mode="contained"
-					onPress={analyzePrakriti}
-					style={styles.button}
-					contentStyle={styles.buttonContent}
-					labelStyle={styles.buttonLabel}
-					disabled={Object.keys(answers).length < questions.length}
-				>
-					माझी प्रकृती तपासा
-				</Button>
-
-				{result && (
+							<Button
+								mode="outlined"
+								onPress={handleReset}
+								style={[styles.button, styles.resetButton]}
+								contentStyle={styles.buttonContent}
+								labelStyle={[styles.buttonLabel, styles.resetButtonLabel]}
+							>
+								फॉर्म रीसेट करा
+							</Button>
+						</View>
+					</>
+				) : (
 					<Card style={styles.resultCard}>
 						<Card.Content>
 							<Text style={styles.resultTitle}>
-								{prakritiDescriptions[result].title}
+								{prakritiDescriptions[prakritiType!].title}
 							</Text>
 							<Text style={styles.resultDescription}>
-								{prakritiDescriptions[result].description}
+								{prakritiDescriptions[prakritiType!].description}
 							</Text>
 							<Text style={styles.remediesTitle}>उपाय:</Text>
-							{prakritiDescriptions[result].remedies.map((remedy, index) => (
+							{prakritiDescriptions[prakritiType!].remedies.map((remedy, index) => (
 								<Text key={index} style={styles.remedyText}>
 									{remedy}
 								</Text>
 							))}
+							<Button
+								mode="contained"
+								onPress={handleReset}
+								style={[styles.button, { marginTop: 20 }]}
+								contentStyle={styles.buttonContent}
+								labelStyle={styles.buttonLabel}
+							>
+								पुन्हा टेस्ट करा
+							</Button>
 						</Card.Content>
 					</Card>
 				)}
@@ -245,6 +300,7 @@ const styles = StyleSheet.create({
 		backgroundColor: 'rgba(11, 59, 45, 0.6)',
 		justifyContent: 'flex-end',
 		padding: 16,
+		paddingTop: Platform.OS === 'ios' ? 40 : 32,
 	},
 	headerTitle: {
 		color: 'white',
@@ -264,13 +320,14 @@ const styles = StyleSheet.create({
 	infoCard: {
 		marginBottom: 16,
 		backgroundColor: '#0B3B2D',
-		borderRadius: 12,
+		borderRadius: 10,
 		elevation: 4,
 	},
 	infoTitle: {
 		color: '#D4B895',
 		marginBottom: 8,
 		fontFamily: 'Poppins-Bold',
+		fontSize:20
 	},
 	infoText: {
 		color: 'white',
@@ -299,14 +356,14 @@ const styles = StyleSheet.create({
 	button: {
 		marginVertical: 16,
 		backgroundColor: '#0B3B2D',
-		borderRadius: 8,
-		elevation: 2,
+		borderRadius: 12,
+		elevation: 10,
 	},
 	buttonContent: {
-		height: 48,
+		height: 50,
 	},
 	buttonLabel: {
-		fontSize: 16,
+		fontSize: 14,
 		fontFamily: 'Poppins-Bold',
 		color: '#D4B895',
 	},
@@ -338,5 +395,26 @@ const styles = StyleSheet.create({
 		fontFamily: 'Poppins-Regular',
 		color: 'white',
 		marginBottom: 6,
+	},
+	buttonContainer: {
+		paddingHorizontal: 16,
+		paddingBottom: 20,
+	},
+	resetButton: {
+		borderColor: '#0B3B2D',
+		backgroundColor: 'transparent',
+		marginTop: 8,
+	},
+	resetButtonLabel: {
+		color: '#0B3B2D',
+	},
+	headerContent: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		paddingHorizontal: 8,
+		marginBottom: 16,
+	},
+	menuButton: {
+		margin: 0,
 	},
 });

@@ -17,26 +17,37 @@ import Animated, {
 	withDelay,
 	useSharedValue,
 	FadeIn,
+	Easing,
 } from 'react-native-reanimated';
+import disordersData from '../data/disorders.json';
+import GlobalAyurvedaStats from '../components/GlobalAyurvedaStats';
+
+interface Disorder {
+	id: number;
+	name: string;
+	description: string;
+	category: string;
+}
 
 const sections = [
 	{ 
 		id: 1, 
-		title: 'Diet & Hygiene', 
-		route: '/(drawer)/diet-hygiene', 
+		title: 'Ayurveda for Life', 
+		route: '/(drawer)/importance', 
 		image: require('../../assets/images/Diet.jpg'),
-		description: 'Ancient wisdom for modern wellness'
+		description: 'Science of life and longevity'
+		
 	},
 	{ 
 		id: 2, 
-		title: 'Importance of Ayurveda', 
-		route: '/(drawer)/importance', 
+		title: 'Diet is Medicine', 
+		route: '/(drawer)/diet-hygiene', 
 		image: require('../../assets/images/ImportanceOfAyurveda.jpg'),
-		description: 'Science of life and longevity'
+		description: 'Ancient wisdom for modern wellness'
 	},
 	{ 
 		id: 3, 
-		title: 'Prakirti Parikshan', 
+		title: 'Prakruti Parikshan', 
 		route: '/(tabs)/prakriti', 
 		image: require('../../assets/images/PrakritiParikshan.jpg'),
 		description: 'Discover your constitution'
@@ -54,38 +65,60 @@ export default function HomePage() {
 	const router = useRouter();
 	const navigation = useNavigation();
 	
-	// Group all useState hooks together
-	const [searchQuery, setSearchQuery] = useState('');
-	const translateX = useSharedValue(-300);
-	const opacity = useSharedValue(0);
-
-	// Move useFonts before any other hooks
 	const [fontsLoaded] = useFonts({
 		'Poppins-Bold': require('../../assets/fonts/Poppins-Bold.ttf'),
 		'Poppins-Regular': require('../../assets/fonts/Poppins-Regular.ttf'),
 		'Sanskrit': require('../../assets/fonts/NotoSansDevanagari-Regular.ttf'),
 		'Amita-Bold': require('../../assets/fonts/Amita-Bold.ttf'),
 	});
+	
+	const [searchQuery, setSearchQuery] = useState('');
+	const [showSuggestions, setShowSuggestions] = useState(false);
+	const [filteredDisorders, setFilteredDisorders] = useState<Disorder[]>([]);
+	const translateX = useSharedValue(400);
+	const opacity = useSharedValue(0);
+	const [searchPlaceholder, setSearchPlaceholder] = useState('Search disorders...');
 
-	// useEffect should come after all other hooks
 	useEffect(() => {
-		opacity.value = withDelay(500, withTiming(1, { duration: 1000 }));
-		translateX.value = withDelay(
-			500,
-			withRepeat(
-				withSequence(
-					withTiming(0, { duration: 1500 }),
-					withTiming(-300, { duration: 0 })
-				),
-				-1,
-				false
-			)
+		// Animation for the Sanskrit quote
+		translateX.value = withRepeat(
+			withSequence(
+				withTiming(-400, {
+					duration: 10000,
+					easing: Easing.linear
+				}),
+				withTiming(400, { 
+					duration: 0,
+					easing: Easing.linear
+				})
+			),
+			-1,
+			false
 		);
+
+		// Animation for search placeholder
+		const placeholders = [
+			'Search disorders...',
+			'विकार शोधा...',
+			'रोग खोजें...',
+		];
+		let currentIndex = 0;
+
+		const changePlaceholder = () => {
+			currentIndex = (currentIndex + 1) % placeholders.length;
+			setSearchPlaceholder(placeholders[currentIndex]);
+		};
+
+		const intervalId = setInterval(changePlaceholder, 2000);
+
+		return () => {
+			clearInterval(intervalId);
+			translateX.value = 400; // Reset animation when component unmounts
+		};
 	}, []);
 
 	const animatedStyle = useAnimatedStyle(() => ({
 		transform: [{ translateX: translateX.value }],
-		opacity: opacity.value,
 	}));
 
 	if (!fontsLoaded) {
@@ -95,8 +128,22 @@ export default function HomePage() {
 	const handleSearch = (query: string) => {
 		setSearchQuery(query);
 		if (query.trim()) {
-			router.push('/disorders');
+			const filtered = disordersData.disorders.filter(disorder =>
+				disorder.name.toLowerCase().includes(query.toLowerCase()) ||
+				disorder.description.toLowerCase().includes(query.toLowerCase())
+			);
+			setFilteredDisorders(filtered);
+			setShowSuggestions(true);
+		} else {
+			setFilteredDisorders([]);
+			setShowSuggestions(false);
 		}
+	};
+
+	const handleDisorderSelect = (disorderId: number) => {
+		setSearchQuery('');
+		setShowSuggestions(false);
+		router.push(`/symptoms/${disorderId}`);
 	};
 
 	return (
@@ -133,14 +180,33 @@ export default function HomePage() {
 
 			<View style={styles.searchBarContainer}>
 				<Searchbar
-					placeholder="Search disorders..."
+					placeholder={searchPlaceholder}
 					onChangeText={handleSearch}
 					value={searchQuery}
 					style={styles.searchBar}
 					inputStyle={styles.searchInput}
 					iconColor="#0B3B2D"
-					placeholderTextColor="#666"
+					placeholderTextColor="#0B3B2D"
+					elevation={4}
 				/>
+				
+				{showSuggestions && searchQuery.trim() !== '' && (
+					<View style={styles.suggestionsContainer}>
+						{filteredDisorders.map((disorder) => (
+							<TouchableOpacity
+								key={disorder.id}
+								style={styles.suggestionItem}
+								onPress={() => handleDisorderSelect(disorder.id)}
+							>
+								<MaterialIcons name="healing" size={20} color="#0B3B2D" />
+								<Text style={styles.suggestionText}>{disorder.name}</Text>
+							</TouchableOpacity>
+						))}
+						{filteredDisorders.length === 0 && (
+							<Text style={styles.noResultsText}>No disorders found</Text>
+						)}
+					</View>
+				)}
 			</View>
 
 			<ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
@@ -166,15 +232,23 @@ export default function HomePage() {
 					))}
 				</View>
 
-				<View style={styles.footer}>
-					<View style={styles.quoteWrapper}>
+				<View style={styles.quoteContainer}>
+					<View style={styles.quoteContent}>
 						<Animated.Text 
 							style={[styles.quoteText, animatedStyle]}
+							numberOfLines={1}
 						>
-							"स्वस्थस्य स्वास्थ्य रक्षणम्"
+							॥ स्वस्थस्य स्वास्थ्य रक्षणं, आतुरस्य विकार प्रशमनं ॥    ॥ स्वस्थस्य स्वास्थ्य रक्षणं, आतुरस्य विकार प्रशमनं ॥
 						</Animated.Text>
 					</View>
 				</View>
+
+				<Animated.View 
+					entering={FadeInDown.delay(100).springify()}
+					style={styles.statsSection}
+				>
+					<GlobalAyurvedaStats />
+				</Animated.View>
 			</ScrollView>
 		</View>
 	);
@@ -186,7 +260,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#F3F8F4',
 	},
 	header: {
-		height: 200,
+		height: 190,
 	},
 	headerImage: {
 		opacity: 0.9,
@@ -212,7 +286,7 @@ const styles = StyleSheet.create({
 	searchBarContainer: {
 		position: 'relative',
 		marginTop: -25,
-		zIndex: 1,
+		zIndex: 2,
 		paddingHorizontal: 16,
 	},
 	searchBar: {
@@ -223,13 +297,14 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 0, height: 3 },
 		shadowOpacity: 0.25,
 		shadowRadius: 5,
-		borderWidth: 1,
-		borderColor: 'rgba(11, 59, 45, 0.2)',
+		borderWidth: 1.5,
+		borderColor: '#0B3B2D40',
 	},
 	searchInput: {
 		fontFamily: 'Poppins-Regular',
 		fontSize: 16,
 		color: '#0B3B2D',
+		height: 48,
 	},
 	content: {
 		flex: 1,
@@ -288,35 +363,77 @@ const styles = StyleSheet.create({
 		textShadowOffset: { width: 0, height: 1 },
 		textShadowRadius: 3,
 	},
-	footer: {
-		paddingVertical: 20,
-		paddingHorizontal: 20,
-		marginTop: 0,
-		marginBottom: 80,
+	quoteContainer: {
+		paddingVertical: 16,
+		backgroundColor: 'transparent',
 	},
-	quoteWrapper: {
+	quoteContent: {
 		overflow: 'hidden',
 		alignItems: 'center',
 		justifyContent: 'center',
-		height: 50,
+		height: 70,
+		width: '100%',
 	},
 	quoteText: {
 		color: '#0B3B2D',
-		fontSize: 30,
+		fontSize: 32,
 		fontFamily: 'Amita-Bold',
 		textAlign: 'center',
-		letterSpacing: 2,
-		lineHeight: 40,
-		width: '200%',
+		letterSpacing: 1.5,
+		lineHeight: 48,
 		position: 'absolute',
+		paddingHorizontal: 20,
+		minWidth: 1600,
 	},
 	quoteTranslation: {
 		color: '#666666',
-		fontSize: 18,
+		fontSize: 14,
 		fontFamily: 'Poppins-Regular',
 		fontStyle: 'italic',
 		textAlign: 'center',
-		letterSpacing: 1,
+		letterSpacing: 0.5,
+		marginTop: 28,
+	},
+	statsSection: {
 		marginTop: 4,
+		marginBottom: 24,
+	},
+	suggestionsContainer: {
+		position: 'absolute',
+		top: '100%',
+		left: 16,
+		right: 16,
+		backgroundColor: 'white',
+		borderRadius: 12,
+		marginTop: 4,
+		paddingVertical: 8,
+		elevation: 5,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.25,
+		shadowRadius: 3.84,
+		maxHeight: 200,
+		borderWidth: 1,
+		borderColor: '#0B3B2D20',
+	},
+	suggestionItem: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		paddingVertical: 12,
+		paddingHorizontal: 16,
+		borderBottomWidth: 1,
+		borderBottomColor: '#f0f0f0',
+	},
+	suggestionText: {
+		marginLeft: 12,
+		fontSize: 16,
+		color: '#0B3B2D',
+		fontFamily: 'Poppins-Regular',
+	},
+	noResultsText: {
+		padding: 16,
+		textAlign: 'center',
+		color: '#666',
+		fontFamily: 'Poppins-Regular',
 	},
 });

@@ -40,10 +40,10 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="prakriti"
 				options={{
-					title: 'Prakriti',
+					title: 'Prakruti',
 					tabBarIcon: ({ color, size }) => (
 						<View style={styles.iconContainer}>
-							<MaterialCommunityIcons name="meditation" size={24} color={color} />
+							<MaterialCommunityIcons name="account-heart" size={24} color={color} />
 						</View>
 					),
 				}}
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
 	},
 	tabLabel: {
 		fontFamily: 'Poppins-Regular',
-		fontSize: 12,
+		fontSize: 10,
 		marginTop: 0,
 		paddingTop: 0,
 		lineHeight: 16,

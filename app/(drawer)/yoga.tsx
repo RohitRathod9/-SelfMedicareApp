@@ -53,7 +53,10 @@ export default function YogaScreen() {
 				</View>
 			</ImageBackground>
 
-			<ScrollView style={styles.content}>
+			<ScrollView 
+				style={styles.content}
+				contentContainerStyle={styles.contentContainer}
+			>
 				<Card style={styles.introCard}>
 					<Card.Content>
 						<Text style={styles.introText}>
@@ -87,6 +90,7 @@ export default function YogaScreen() {
 						</Card.Content>
 					</Card>
 				))}
+				<View style={styles.bottomPadding} />
 			</ScrollView>
 		</View>
 	);
@@ -119,6 +123,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 		padding: 16,
 	},
+	contentContainer: {
+		paddingBottom: 24,
+	},
 	introCard: {
 		marginBottom: 16,
 		backgroundColor: '#4CAF50',
@@ -146,5 +153,8 @@ const styles = StyleSheet.create({
 	},
 	benefitText: {
 		color: '#666',
+	},
+	bottomPadding: {
+		height: 16,
 	},
 });

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, ImageBackground, TouchableOpacity } from 'react-native';
-import { Searchbar, Text, Card, Divider } from 'react-native-paper';
+import { View, StyleSheet, FlatList, ImageBackground, TouchableOpacity, Platform } from 'react-native';
+import { Searchbar, Text, Card, Divider, IconButton } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import disordersData from '../data/disorders.json';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
 
 export default function DisordersPage() {
 	const router = useRouter();
 	const [searchQuery, setSearchQuery] = useState('');
 	const [filteredDisorders, setFilteredDisorders] = useState(disordersData.disorders);
+	const navigation = useNavigation();
 
 	const handleSearch = (query: string) => {
 		setSearchQuery(query);
@@ -57,7 +59,6 @@ export default function DisordersPage() {
 					<Text variant="headlineMedium" style={styles.headerTitle}>
 						Ayurvedic Disorders
 					</Text>
-	
 				</View>
 			</ImageBackground>
 
@@ -105,6 +106,7 @@ const styles = StyleSheet.create({
 		backgroundColor: 'rgba(11, 59, 45, 0.6)',
 		justifyContent: 'flex-end',
 		padding: 16,
+		paddingTop: Platform.OS === 'ios' ? 40 : 32,
 	},
 	headerTitle: {
 		color: 'white',
@@ -153,11 +155,11 @@ const styles = StyleSheet.create({
 		lineHeight: 24,
 	},
 	listContainer: {
-		padding: 16,
+		padding: 20,
 		paddingTop: 0,
 	},
 	card: {
-		marginBottom: 16,
+		marginBottom: 12,
 		borderRadius: 12,
 		elevation: 2,
 		backgroundColor: 'white',
@@ -169,6 +171,7 @@ const styles = StyleSheet.create({
 	},
 	disorderName: {
 		fontFamily: 'Poppins-Bold',
+		fontSize:20,
 		color: '#0B3B2D',
 		marginLeft: 12,
 		flex: 1,
@@ -192,5 +195,14 @@ const styles = StyleSheet.create({
 		color: '#0B3B2D',
 		fontFamily: 'Poppins-Bold',
 		marginLeft: 8,
+	},
+	headerContent: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		paddingHorizontal: 8,
+		marginBottom: 16,
+	},
+	menuButton: {
+		margin: 0,
 	},
 });

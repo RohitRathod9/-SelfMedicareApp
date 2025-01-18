@@ -1,81 +1,82 @@
-import FontAwesome from '@expo/vector-icons/build/FontAwesome';
 import { Stack } from 'expo-router';
-import { useRouter } from 'expo-router';
-import { Pressable } from 'react-native';
+import { useRouter, useNavigation } from 'expo-router';
+import { useEffect } from 'react';
+import { BackHandler } from 'react-native';
 
 export default function DrawerLayout() {
   const router = useRouter();
+  const navigation = useNavigation();
 
-  const handleBack = () => {
-    // Force direct navigation to home, clearing the stack
-    router.navigate('/(tabs)/home');
-  };
+  useEffect(() => {
+    const backAction = () => {
+      router.replace('/(tabs)/home');
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <Stack
       screenOptions={{
-        headerLeft: () => (
-          <Pressable onPress={handleBack}>
-            <FontAwesome name="arrow-left" size={20} style={{ marginLeft: 15 }} />
-          </Pressable>
-        ),
-        headerStyle: {
-          backgroundColor: '#4CAF50',
-        },
-        headerTintColor: '#fff',
-        gestureEnabled: false,
-        animation: 'none',
-        // Prevent screen stacking
-        presentation: 'containedModal',
+        headerShown: false,
+        gestureEnabled: true,
+        animation: 'slide_from_right',
+        presentation: 'card',
       }}
     >
+      <Stack.Screen 
+        name="admin" 
+        options={{ 
+          title: "Admin",
+          headerShown: false,
+        }} 
+      />
       <Stack.Screen 
         name="meditation" 
         options={{ 
           title: "Meditation",
-          headerShown: false,
         }} 
       />
       <Stack.Screen 
         name="yoga" 
         options={{ 
           title: "Yoga",
-          headerShown: false,
         }} 
       />
       <Stack.Screen 
         name="exercise" 
         options={{ 
           title: "Exercise",
-          headerShown: false,
         }} 
       />
       <Stack.Screen 
         name="books" 
         options={{ 
           title: "Ancient Books",
-          headerShown: false,
         }} 
       />
       <Stack.Screen 
         name="privacy" 
         options={{ 
           title: "Privacy Policy",
-          headerShown: false,
         }} 
       />
       <Stack.Screen 
-        name="diet-hygiene" 
+        name="diet" 
         options={{ 
           title: "Diet & Hygiene",
-          headerShown: false,
         }} 
       />
       <Stack.Screen 
         name="importance" 
         options={{ 
           title: "Importance of Ayurveda",
-          headerShown: false,
         }} 
       />
     </Stack>

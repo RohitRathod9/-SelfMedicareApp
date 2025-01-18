@@ -17,7 +17,7 @@ const ayurvedaImportance = [
 	},
 	{
 		title: "Personalized Treatment",
-		content: "Recognizes each person's unique constitution (Prakriti) and provides customized treatment plans based on individual needs."
+		content: "Recognizes each person's unique constitution (Prakruti) and provides customized treatment plans based on individual needs."
 	}
 ];
 
@@ -49,7 +49,10 @@ export default function ImportanceScreen() {
 				</View>
 			</ImageBackground>
 
-			<ScrollView style={styles.content}>
+			<ScrollView 
+				style={styles.content}
+				contentContainerStyle={styles.contentContainer}
+			>
 				<Card style={styles.introCard}>
 					<Card.Content>
 						<Text style={styles.introText}>
@@ -87,6 +90,7 @@ export default function ImportanceScreen() {
 						</Card.Content>
 					</Card>
 				))}
+				<View style={styles.bottomPadding} />
 			</ScrollView>
 		</View>
 	);
@@ -145,5 +149,11 @@ const styles = StyleSheet.create({
 	cardContent: {
 		color: '#666',
 		lineHeight: 22,
+	},
+	contentContainer: {
+		paddingBottom: 24,
+	},
+	bottomPadding: {
+		height: 16,
 	},
 }); 

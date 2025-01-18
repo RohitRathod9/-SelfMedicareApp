@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import { Text, Card, IconButton } from 'react-native-paper';
 import { useRouter } from 'expo-router';
@@ -8,6 +8,7 @@ import symptomsData from '../data/symptoms.json';
 export default function SymptomsPage() {
 	const { id } = useLocalSearchParams();
 	const router = useRouter();
+	const [language, setLanguage] = useState('mr');
 	const disorder = symptomsData.symptoms.find(s => s.disorderId === Number(id));
 
 	if (!disorder) {
@@ -17,6 +18,10 @@ export default function SymptomsPage() {
 			</View>
 		);
 	}
+
+	const toggleLanguage = () => {
+		setLanguage(prev => prev === 'mr' ? 'en' : 'mr');
+	};
 
 	return (
 		<View style={styles.container}>
@@ -41,11 +46,20 @@ export default function SymptomsPage() {
 			<ScrollView style={styles.content}>
 				<Card style={styles.card}>
 					<Card.Content>
-						<Text variant="titleLarge" style={styles.sectionTitle}>
-							Symptoms
-						</Text>
-						{disorder.symptoms.map((symptom, index) => (
-							<View key={index} style={styles.listItem}>
+						<View style={styles.cardHeader}>
+							<Text variant="titleLarge" style={styles.sectionTitle}>
+								Symptoms
+							</Text>
+							<IconButton
+								icon="translate"
+								size={24}
+								onPress={toggleLanguage}
+								style={styles.translateButton}
+								iconColor="#0B3B2D"
+							/>
+						</View>
+						{Array.isArray(disorder.symptoms[language]) && disorder.symptoms[language].map((symptom: string, index: number) => (
+							<View key={index.toString()} style={styles.listItem}>
 								<Text style={styles.bullet}>•</Text>
 								<Text style={styles.listText}>{symptom}</Text>
 							</View>
@@ -55,11 +69,20 @@ export default function SymptomsPage() {
 
 				<Card style={styles.remedyCard}>
 					<Card.Content>
-						<Text variant="titleLarge" style={styles.remedyTitle}>
-							Ayurvedic Remedies
-						</Text>
-						{disorder.remedies.map((remedy, index) => (
-							<View key={index} style={styles.remedyItem}>
+						<View style={styles.cardHeader}>
+							<Text variant="titleLarge" style={styles.remedyTitle}>
+								Ayurvedic Remedies
+							</Text>
+							<IconButton
+								icon="translate"
+								size={24}
+								onPress={toggleLanguage}
+								style={styles.translateButton}
+								iconColor="#D4B895"
+							/>
+						</View>
+						{Array.isArray(disorder.remedies[language]) && disorder.remedies[language].map((remedy: string, index: number) => (
+							<View key={index.toString()} style={styles.remedyItem}>
 								<Text style={styles.remedyBullet}>•</Text>
 								<Text style={styles.remedyText}>{remedy}</Text>
 							</View>
@@ -70,6 +93,19 @@ export default function SymptomsPage() {
 		</View>
 	);
 }
+
+const additionalStyles = StyleSheet.create({
+	cardHeader: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		marginBottom: 16,
+	},
+	translateButton: {
+		margin: 0,
+		padding: 0,
+	}
+});
 
 const styles = StyleSheet.create({
 	container: {
@@ -158,4 +194,5 @@ const styles = StyleSheet.create({
 		lineHeight: 24,
 		fontFamily: 'Poppins-Regular',
 	},
+	...additionalStyles,
 });

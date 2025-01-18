@@ -1,38 +1,45 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, ImageBackground } from 'react-native';
-import { Text, Card, List } from 'react-native-paper';
+import { View, StyleSheet, ScrollView, ImageBackground, Linking } from 'react-native';
+import { Text, Card, List, Button } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const ancientBooks = [
+const books = [
 	{
-		title: "Charaka Samhita",
-		description: "Foundation text of Ayurveda",
+		id: 1,
+		title: 'Charaka Samhita',
+		description: 'The foundational text of Ayurveda, focusing on internal medicine and treatment principles.',
 		highlights: [
-			"Principles of health and disease",
-			"Eight branches of Ayurveda",
-			"Detailed treatment methods",
-			"Herbal medicine preparations"
-		]
+			'Principles of health and disease',
+			'Eight branches of Ayurveda',
+			'Detailed treatment methods',
+			'Herbal medicine preparations'
+		],
+		downloadLink: 'https://www.carakasamhitaonline.com/mediawiki-1.32.1/index.php?title=Charaka_Samhita',
 	},
 	{
-		title: "Sushruta Samhita",
-		description: "Ancient surgical and medical text",
+		id: 2,
+		title: 'Sushruta Samhita',
+		description: 'Ancient Sanskrit text on surgery and surgical procedures in Ayurvedic medicine.',
 		highlights: [
-			"Surgical procedures and instruments",
-			"Anatomy and physiology",
-			"Disease classifications",
-			"Treatment protocols"
-		]
+			'Surgical procedures and instruments',
+			'Anatomy and physiology',
+			'Disease classifications',
+			'Treatment protocols'
+		],
+		downloadLink: 'https://www.wisdomlib.org/hinduism/book/sushruta-samhita-volume-1-sutrasthana',
 	},
 	{
-		title: "Ashtanga Hridaya",
-		description: "Comprehensive medical guide",
+		id: 3,
+		title: 'Ashtanga Hridaya',
+		description: 'Comprehensive treatise on Ayurvedic medicine and healthcare practices.',
 		highlights: [
-			"Daily and seasonal routines",
-			"Diagnosis methods",
-			"Treatment principles",
-			"Preventive medicine"
-		]
-	}
+			'Daily and seasonal routines',
+			'Diagnosis methods',
+			'Treatment principles',
+			'Preventive medicine'
+		],
+		downloadLink: 'https://www.wisdomlib.org/hinduism/book/ashtanga-hridaya-sutrasthana',
+	},
 ];
 
 export default function BooksScreen() {
@@ -43,16 +50,15 @@ export default function BooksScreen() {
 				style={styles.header}
 			>
 				<View style={styles.headerOverlay}>
-					<Text variant="headlineMedium" style={styles.headerTitle}>
-						Ancient Books
-					</Text>
-					<Text style={styles.headerSubtitle}>
-						Timeless Wisdom of Ayurveda
-					</Text>
+					<Text style={styles.headerTitle}>Ancient References</Text>
+					<Text style={styles.headerSubtitle}>Timeless Wisdom of Ayurveda</Text>
 				</View>
 			</ImageBackground>
 
-			<ScrollView style={styles.content}>
+			<ScrollView 
+				style={styles.content}
+				contentContainerStyle={styles.contentContainer}
+			>
 				<Card style={styles.introCard}>
 					<Card.Content>
 						<Text style={styles.introText}>
@@ -61,26 +67,48 @@ export default function BooksScreen() {
 					</Card.Content>
 				</Card>
 
-				{ancientBooks.map((book, index) => (
-					<Card key={index} style={styles.bookCard}>
+				{books.map((book) => (
+					<Card key={book.id} style={styles.bookCard}>
 						<Card.Content>
-							<Text variant="titleLarge" style={styles.bookTitle}>
-								{book.title}
-							</Text>
-							<Text style={styles.bookDescription}>
-								{book.description}
-							</Text>
+							<Text style={styles.bookTitle}>{book.title}</Text>
+							<Text style={styles.bookDescription}>{book.description}</Text>
+							
 							<List.Section>
 								<List.Subheader style={styles.highlightsHeader}>Key Topics</List.Subheader>
 								{book.highlights.map((highlight, idx) => (
 									<List.Item
 										key={idx}
 										title={highlight}
-										left={props => <List.Icon {...props} icon="book-open-variant" color="#4CAF50" />}
+										left={props => (
+											<MaterialCommunityIcons 
+												name="book-open-variant" 
+												size={24} 
+												color="#0B3B2D" 
+												style={{ marginLeft: 8, marginRight: -8 }}
+											/>
+										)}
 										titleStyle={styles.highlightText}
 									/>
 								))}
 							</List.Section>
+
+							<Button
+								mode="contained"
+								onPress={() => Linking.openURL(book.downloadLink)}
+								style={styles.readButton}
+								labelStyle={styles.buttonLabel}
+								contentStyle={styles.buttonContent}
+								icon={({size, color}) => (
+									<MaterialCommunityIcons 
+										name="book-open-page-variant" 
+										size={32} 
+										color="#FFFFFF" 
+										style={styles.buttonIcon}
+									/>
+								)}
+							>
+								READ ONLINE
+							</Button>
 						</Card.Content>
 					</Card>
 				))}
@@ -92,7 +120,7 @@ export default function BooksScreen() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#f5f5f5',
+		backgroundColor: '#F3F8F4',
 	},
 	header: {
 		height: 200,
@@ -104,44 +132,98 @@ const styles = StyleSheet.create({
 		padding: 16,
 	},
 	headerTitle: {
-		color: 'white',
+		color: '#FFFFFF',
+		fontSize: 32,
 		fontWeight: 'bold',
+		fontFamily: 'Poppins-Bold',
 		marginBottom: 8,
 	},
 	headerSubtitle: {
-		color: 'white',
+		color: '#D4B895',
 		fontSize: 16,
+		fontFamily: 'Poppins-Regular',
 	},
 	content: {
 		flex: 1,
 		padding: 16,
 	},
+	contentContainer: {
+		paddingBottom: 24,
+	},
 	introCard: {
 		marginBottom: 16,
-		backgroundColor: '#4CAF50',
+		backgroundColor: '#0B3B2D',
+		elevation: 4,
+		borderRadius: 12,
 	},
 	introText: {
-		color: 'white',
+		color: '#FFFFFF',
 		fontSize: 16,
 		lineHeight: 24,
+		fontFamily: 'Poppins-Regular',
 	},
 	bookCard: {
 		marginBottom: 16,
+		elevation: 4,
+		borderRadius: 12,
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		borderColor: '#0B3B2D20',
 	},
 	bookTitle: {
+		fontSize: 28,
 		fontWeight: 'bold',
-		color: '#4CAF50',
-		marginBottom: 8,
+		color: '#0B3B2D',
+		marginBottom: 12,
+		fontFamily: 'Poppins-Bold',
+		letterSpacing: 0.5,
 	},
 	bookDescription: {
-		color: '#666',
-		marginBottom: 16,
+		fontSize: 16,
+		color: '#0B3B2D',
+		marginBottom: 20,
+		lineHeight: 24,
+		fontFamily: 'Poppins-Regular',
+		opacity: 0.8,
 	},
 	highlightsHeader: {
-		color: '#4CAF50',
+		color: '#0B3B2D',
 		fontWeight: 'bold',
+		fontSize: 22,
+		fontFamily: 'Poppins-Bold',
+		marginBottom: 8,
+		letterSpacing: 0.5,
 	},
 	highlightText: {
-		color: '#666',
+		color: '#0B3B2D',
+		fontSize: 16,
+		fontFamily: 'Poppins-Regular',
+		opacity: 0.8,
+		lineHeight: 24,
+	},
+	readButton: {
+		marginTop: 20,
+		backgroundColor: '#0B3B2D',
+		borderRadius: 8,
+		elevation: 4,
+		borderWidth: 1,
+		borderColor: '#D4B89555',
+	},
+	buttonContent: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center',
+		paddingVertical: 8,
+		gap: 12,
+	},
+	buttonLabel: {
+		fontSize: 18,
+		fontWeight: 'bold',
+		fontFamily: 'Poppins-Bold',
+		color: '#FFFFFF',
+		letterSpacing: 1,
+	},
+	buttonIcon: {
+		marginRight: 4,
 	},
 });
