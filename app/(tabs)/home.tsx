@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
 	},
 	headerOverlay: {
 		flex: 1,
-		backgroundColor: 'rgba(0, 0, 0, 0.3)',
+
 		paddingTop: Platform.OS === 'ios' ? 40 : 32,
 	},
 	headerContent: {
@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
 		minWidth: 1600,
 	},
 	quoteTranslation: {
-		color: '#666666',
+		color: '#FFFFFF666',
 		fontSize: 14,
 		fontFamily: 'Poppins-Regular',
 		fontStyle: 'italic',
@@ -433,7 +433,7 @@ const styles = StyleSheet.create({
 	noResultsText: {
 		padding: 16,
 		textAlign: 'center',
-		color: '#666',
+		color: '#FFFFFF',
 		fontFamily: 'Poppins-Regular',
 	},
 });

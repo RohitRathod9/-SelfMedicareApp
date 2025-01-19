@@ -152,13 +152,13 @@ const styles = StyleSheet.create({
 		color: '#4CAF50',
 	},
 	subheader: {
-		color: '#666',
+		color: '#FFFFFF',
 		fontSize: 18,
 		fontWeight: 'bold',
 	},
 	listItemText: {
 		fontSize: 16,
-		color: '#666',
+		color: '#FFFFFF',
 	},
 	contentContainer: {
 		paddingBottom: 24,

@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   techniqueDescription: {
-    color: '#666',
+    color: '#FFFFFF',
     marginBottom: 16,
   },
   stepsHeader: {
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   stepText: {
-    color: '#666',
+    color: '#FFFFFF',
   },
   bottomPadding: {
     height: 16,

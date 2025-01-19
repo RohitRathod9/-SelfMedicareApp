@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
 		marginBottom: 8,
 	},
 	exerciseDescription: {
-		color: '#666',
+		color: '#FFFFFF',
 		marginBottom: 16,
 	},
 	routinesHeader: {
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 	},
 	routineText: {
-		color: '#666',
+		color: '#FFFFFF',
 	},
 	doshaBalance: {
 		marginTop: 8,

@@ -78,10 +78,11 @@ const styles = StyleSheet.create({
 	},
 	tabLabel: {
 		fontFamily: 'Poppins-Regular',
-		fontSize: 10,
+		fontSize: 12,
 		marginTop: 0,
 		paddingTop: 0,
 		lineHeight: 16,
+		overflow: 'visible',
 	},
 	tabItem: {
 		height: 50,

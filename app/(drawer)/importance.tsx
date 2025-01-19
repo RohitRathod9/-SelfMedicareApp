@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
 		color: '#4CAF50',
 	},
 	cardContent: {
-		color: '#666',
+		color: '#FFFFFF',
 		lineHeight: 22,
 	},
 	contentContainer: {

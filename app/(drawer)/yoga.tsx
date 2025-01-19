@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
 		marginBottom: 8,
 	},
 	poseDescription: {
-		color: '#666',
+		color: '#FFFFFF',
 		marginBottom: 16,
 	},
 	benefitsHeader: {
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 	},
 	benefitText: {
-		color: '#666',
+		color: '#FFFFFF',
 	},
 	bottomPadding: {
 		height: 16,

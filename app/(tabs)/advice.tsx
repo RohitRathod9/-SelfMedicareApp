@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
 		fontFamily: 'Poppins-Bold',
 	},
 	specialization: {
-		color: '#666',
+		color: '#FFFFFF',
 		fontFamily: 'Poppins-Regular',
 	},
 	divider: {

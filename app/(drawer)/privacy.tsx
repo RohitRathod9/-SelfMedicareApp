@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
 		marginBottom: 8,
 	},
 	sectionContent: {
-		color: '#666',
+		color: '#FFFFFF',
 		lineHeight: 22,
 	},
 	contactCard: {
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
 		marginBottom: 8,
 	},
 	contactText: {
-		color: '#666',
+		color: '#FFFFFF',
 		lineHeight: 22,
 	},
 });

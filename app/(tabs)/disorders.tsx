@@ -70,7 +70,7 @@ export default function DisordersPage() {
 					style={styles.searchBar}
 					inputStyle={styles.searchInput}
 					iconColor="#0B3B2D"
-					placeholderTextColor="#666"
+					placeholderTextColor="#0B3B2D"
 				/>
 			</View>
 
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
 		marginBottom: 12,
 	},
 	description: {
-		color: '#666',
+		color: '#0B3B2D',
 		marginBottom: 12,
 		fontFamily: 'Poppins-Regular',
 		lineHeight: 22,

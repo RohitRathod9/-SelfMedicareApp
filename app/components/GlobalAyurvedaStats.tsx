@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 14,
-    color: '#666',
+    color: '#FFFFFF',
     marginTop: 4,
     fontFamily: 'Poppins-Regular',
   },
