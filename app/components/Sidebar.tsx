@@ -78,7 +78,7 @@ export default function Sidebar(props: any) {
 					{ backgroundColor: isDarkMode ? '#0F4D3A' : '#FFFFFF' }
 				]}>
 					<Image
-						source={require('../../assets/images/AdminLogo.jpg')}
+						source={require('../../assets/images/SidebarLogo.jpg')}
 						style={styles.logo}
 					/>
 				</View>

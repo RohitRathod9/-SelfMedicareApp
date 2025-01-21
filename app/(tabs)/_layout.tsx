@@ -78,9 +78,7 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 		marginTop: 4,
 		fontFamily: 'Poppins-Regular',
-		textAlign: 'center',
-		includeFontPadding: false,
-		height: 16,
+		textAlign: 'center'
 	},
 	tabItem: {
 		justifyContent: 'center',

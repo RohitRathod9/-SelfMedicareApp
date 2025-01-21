@@ -48,7 +48,7 @@ export default function Index() {
 	return (
 		<View style={styles.container}>
 			<ImageBackground
-				source={require('../assets/images/SplashScreen.jpg')}
+				source={require('../assets/images/Splash.jpg')}
 				style={styles.backgroundImage}
 				resizeMode="cover"
 			>

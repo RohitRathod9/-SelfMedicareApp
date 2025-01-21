@@ -42,14 +42,14 @@ const sections = [
 		id: 2, 
 		title: 'Diet is Medicine', 
 		route: '/(drawer)/diet-hygiene', 
-		image: require('../../assets/images/ImportanceOfAyurveda.jpg'),
+		image: require('../../assets/images/Ayurveda.jpg'),
 		description: 'Ancient wisdom for modern wellness'
 	},
 	{ 
 		id: 3, 
 		title: 'Prakruti Parikshan', 
 		route: '/(tabs)/prakriti', 
-		image: require('../../assets/images/PrakritiParikshan.jpg'),
+		image: require('../../assets/images/PrakurtiParikshan.jpg'),
 		description: 'Discover your constitution'
 	},
 	{ 
@@ -149,19 +149,33 @@ export default function HomePage() {
 	return (
 		<View style={styles.container}>
 			<ImageBackground
-			source={require('../../assets/images/Roots.jpg')}
+				source={require('../../assets/images/Home2.jpg')}
 				style={styles.header}
 				imageStyle={styles.headerImage}
 			>
-				<View style={styles.headerOverlay}>
+				<View style={[styles.headerOverlay, {
+					backgroundColor: 'rgba(11, 59, 45, 0.4)',
+				}]}>
 					<View style={styles.headerContent}>
 						<IconButton
 							icon={({ size, color }) => (
-								<MaterialIcons name="menu" size={30} color="#FFFFFF" />
+								<MaterialIcons 
+									name="menu" 
+									size={32} 
+									color="#FFFFFF" 
+									style={{
+										textShadowColor: 'rgba(0, 0, 0, 0.75)',
+										textShadowOffset: { width: 1, height: 1 },
+										textShadowRadius: 5,
+									}}
+								/>
 							)}
-							size={24}
+							size={40}
 							iconColor="white"
-							style={styles.menuButton}
+							style={[styles.menuButton, {
+								backgroundColor: 'rgba(0, 0, 0, 0.2)',
+								borderRadius: 12,
+							}]}
 							onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
 						/>
 						

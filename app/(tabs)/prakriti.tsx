@@ -181,7 +181,7 @@ export default function PrakritiScreen() {
 	return (
 		<View style={styles.container}>
 			<ImageBackground
-				source={require('../../assets/images/PrakritiParikshan.jpg')}
+				source={require('../../assets/images/PrakurtiParikshan.jpg')}
 				style={styles.header}
 			>
 				<View style={styles.headerOverlay}>

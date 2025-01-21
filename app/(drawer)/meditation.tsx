@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, ImageBackground } from 'react-native';
+import { View, StyleSheet, ScrollView, ImageBackground, TouchableOpacity } from 'react-native';
 import { Text, Card, List, IconButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/native';
@@ -104,16 +104,20 @@ export default function MeditationScreen() {
               style={styles.menuButton}
             />
             <View style={styles.translateContainer}>
-              <IconButton
-                icon="translate"
-                iconColor="#FFFFFF"
-                size={24}
+              <TouchableOpacity 
+                style={styles.translateWrapper}
                 onPress={toggleLanguage}
-                style={styles.translateButton}
-              />
-              <Text style={styles.translateText}>
-                {language === 'en' ? 'मराठी' : 'ENG'}
-              </Text>
+              >
+                <IconButton
+                  icon="translate"
+                  iconColor="#FFFFFF"
+                  size={24}
+                  style={styles.translateButton}
+                />
+                <Text style={styles.translateText}>
+                  {language === 'en' ? 'मराठी' : 'ENG'}
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
           <Text variant="headlineMedium" style={styles.headerTitle}>
@@ -194,12 +198,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   translateContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#FFFFFF',
+  },
+  translateWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingRight: 12,
   },
   translateButton: {

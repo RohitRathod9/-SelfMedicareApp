@@ -4,12 +4,12 @@
     "slug": "charya-ayurveda",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo.png",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/transparent.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0B3B2D"
+      "backgroundColor": "rgba(0, 0, 0, 0)"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -20,19 +20,19 @@
       "splash": {
         "image": "./assets/images/transparent.png",
         "resizeMode": "contain",
-        "backgroundColor": "#0B3B2D"
+        "backgroundColor": "rgba(0, 0, 0, 0)"
       }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#0B3B2D"
+        "foregroundImage": "./assets/images/transparent.png",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
       },
       "package": "com.charyaayurveda.app",
       "splash": {
         "image": "./assets/images/transparent.png",
         "resizeMode": "contain",
-        "backgroundColor": "#0B3B2D"
+        "backgroundColor": "rgba(0, 0, 0, 0)"
       }
     },
     "extra": {
@@ -49,7 +49,7 @@
     },
     "scheme": "charyaayurveda",
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/transparent.png"
     },
     "plugins": [
       "expo-router"

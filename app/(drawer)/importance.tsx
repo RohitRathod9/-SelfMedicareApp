@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, StyleSheet, ScrollView, ImageBackground } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, ScrollView, ImageBackground, TouchableOpacity } from 'react-native';
 import { Text, Card, List, IconButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/native';
@@ -37,16 +37,21 @@ const principles = [
 
 export default function ImportanceScreen() {
 	const navigation = useNavigation();
+	const [language, setLanguage] = useState('en');
 
 	const openDrawer = () => {
 		// @ts-ignore: dispatch exists but TypeScript doesn't recognize it
 		navigation.dispatch(DrawerActions.openDrawer());
 	};
 
+	const toggleLanguage = () => {
+		setLanguage(language === 'en' ? 'mr' : 'en');
+	};
+
 	return (
 		<View style={styles.container}>
 			<ImageBackground
-				source={require('../../assets/images/ImportanceOfAyurveda.jpg')}
+				source={require('../../assets/images/Ayurveda.jpg')}
 				style={styles.header}
 			>
 				<View style={styles.headerOverlay}>
@@ -58,6 +63,22 @@ export default function ImportanceScreen() {
 							onPress={openDrawer}
 							style={styles.menuButton}
 						/>
+						<View style={styles.translateContainer}>
+							<TouchableOpacity 
+								style={styles.translateWrapper}
+								onPress={toggleLanguage}
+							>
+								<IconButton
+									icon="translate"
+									iconColor="#FFFFFF"
+									size={24}
+									style={styles.translateButton}
+								/>
+								<Text style={styles.translateText}>
+									{language === 'en' ? 'मराठी' : 'ENG'}
+								</Text>
+							</TouchableOpacity>
+						</View>
 					</View>
 					<Text variant="headlineMedium" style={styles.headerTitle}>
 						Importance of Ayurveda
@@ -136,7 +157,7 @@ const styles = StyleSheet.create({
 	},
 	headerTop: {
 		flexDirection: 'row',
-		justifyContent: 'flex-start',
+		justifyContent: 'space-between',
 		alignItems: 'center',
 		marginTop: 8,
 	},
@@ -207,5 +228,25 @@ const styles = StyleSheet.create({
 	},
 	bottomPadding: {
 		height: 16,
+	},
+	translateContainer: {
+		backgroundColor: 'rgba(255, 255, 255, 0.2)',
+		borderRadius: 20,
+		borderWidth: 1,
+		borderColor: '#FFFFFF',
+	},
+	translateWrapper: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		paddingRight: 12,
+	},
+	translateButton: {
+		margin: 0,
+	},
+	translateText: {
+		color: '#FFFFFF',
+		fontFamily: 'Poppins-Medium',
+		fontSize: 14,
+		marginLeft: -8,
 	},
 }); 
