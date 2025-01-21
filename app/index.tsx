@@ -2,6 +2,10 @@ import { useEffect, useRef } from 'react';
 import { View, StyleSheet, ImageBackground, Animated, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text } from 'react-native-paper';
+import * as SplashScreen from 'expo-splash-screen';
+
+// Prevent the native splash screen from auto-hiding
+SplashScreen.preventAutoHideAsync();
 
 export default function Index() {
 	const router = useRouter();
@@ -9,6 +13,10 @@ export default function Index() {
 	const buttonScale = useRef(new Animated.Value(1)).current;
 
 	useEffect(() => {
+		// Hide the native splash screen immediately
+		SplashScreen.hideAsync();
+
+		// Start our custom animations
 		Animated.sequence([
 			Animated.timing(fadeAnim, {
 				toValue: 1,
@@ -33,6 +41,10 @@ export default function Index() {
 		).start();
 	}, []);
 
+	const handleGetStarted = () => {
+		router.replace('/(tabs)/home');
+	};
+
 	return (
 		<View style={styles.container}>
 			<ImageBackground
@@ -42,13 +54,13 @@ export default function Index() {
 			>
 				<Animated.View style={[styles.content, { opacity: fadeAnim }]}>
 					<Text variant="displayLarge" style={styles.title}>
-						Ayurveda for Life
+						Self Medication
 					</Text>
 					<Text variant="titleLarge" style={styles.subtitle}>
-					Harmony through Ayurveda
+						Ayurveda for Life
 					</Text>
 					<TouchableOpacity
-						onPress={() => router.push('/home')}
+						onPress={handleGetStarted}
 						style={styles.buttonContainer}
 					>
 						<Animated.View

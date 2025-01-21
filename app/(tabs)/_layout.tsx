@@ -18,9 +18,9 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="home"
 				options={{
-					title: 'Home',
-					tabBarIcon: ({ color, size }) => (
-						<View style={styles.iconContainer}>
+					title: 'मुख्यपृष्ठ',
+					tabBarIcon: ({ color }) => (
+						<View style={styles.tabContent}>
 							<MaterialCommunityIcons name="home" size={24} color={color} />
 						</View>
 					),
@@ -29,9 +29,9 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="disorders"
 				options={{
-					title: 'Disorders',
-					tabBarIcon: ({ color, size }) => (
-						<View style={styles.iconContainer}>
+					title: 'व्याधी',
+					tabBarIcon: ({ color }) => (
+						<View style={styles.tabContent}>
 							<MaterialCommunityIcons name="hospital-box" size={24} color={color} />
 						</View>
 					),
@@ -40,9 +40,9 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="prakriti"
 				options={{
-					title: 'Prakruti',
-					tabBarIcon: ({ color, size }) => (
-						<View style={styles.iconContainer}>
+					title: 'प्रकृती',
+					tabBarIcon: ({ color }) => (
+						<View style={styles.tabContent}>
 							<MaterialCommunityIcons name="account-heart" size={24} color={color} />
 						</View>
 					),
@@ -51,9 +51,9 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="advice"
 				options={{
-					title: 'Advice',
-					tabBarIcon: ({ color, size }) => (
-						<View style={styles.iconContainer}>
+					title: 'सल्ला',
+					tabBarIcon: ({ color }) => (
+						<View style={styles.tabContent}>
 							<MaterialCommunityIcons name="message-text" size={24} color={color} />
 						</View>
 					),
@@ -73,26 +73,22 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 0, height: -2 },
 		shadowOpacity: 0.2,
 		shadowRadius: 3,
-		paddingTop: 8,
-		paddingBottom: 8,
 	},
 	tabLabel: {
-		fontFamily: 'Poppins-Regular',
 		fontSize: 12,
-		marginTop: 0,
-		paddingTop: 0,
-		lineHeight: 16,
-		overflow: 'visible',
+		marginTop: 4,
+		fontFamily: 'Poppins-Regular',
+		textAlign: 'center',
+		includeFontPadding: false,
+		height: 16,
 	},
 	tabItem: {
-		height: 50,
-		paddingTop: 6,
-		paddingBottom: 6,
+		justifyContent: 'center',
+		alignItems: 'center',
+		paddingVertical: 8,
 	},
-	iconContainer: {
-		height: 24,
+	tabContent: {
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginBottom: 2,
 	},
 });

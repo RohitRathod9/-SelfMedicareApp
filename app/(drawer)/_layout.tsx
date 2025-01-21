@@ -1,7 +1,9 @@
 import { Stack } from 'expo-router';
 import { useRouter, useNavigation } from 'expo-router';
 import { useEffect } from 'react';
-import { BackHandler } from 'react-native';
+import { BackHandler, View, StyleSheet } from 'react-native';
+import BottomNavigation from '../components/BottomNavigation';
+import { DrawerActions } from '@react-navigation/native';
 
 export default function DrawerLayout() {
   const router = useRouter();
@@ -9,7 +11,8 @@ export default function DrawerLayout() {
 
   useEffect(() => {
     const backAction = () => {
-      router.replace('/(tabs)/home');
+      // @ts-ignore: dispatch exists but TypeScript doesn't recognize it
+      navigation.dispatch(DrawerActions.openDrawer());
       return true;
     };
 
@@ -19,66 +22,68 @@ export default function DrawerLayout() {
     );
 
     return () => backHandler.remove();
-  }, []);
+  }, [navigation]);
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        gestureEnabled: true,
-        animation: 'slide_from_right',
-        presentation: 'card',
-      }}
-    >
-      <Stack.Screen 
-        name="admin" 
-        options={{ 
-          title: "Admin",
+    <View style={styles.container}>
+      <Stack
+        screenOptions={{
           headerShown: false,
-        }} 
-      />
-      <Stack.Screen 
-        name="meditation" 
-        options={{ 
-          title: "Meditation",
-        }} 
-      />
-      <Stack.Screen 
-        name="yoga" 
-        options={{ 
-          title: "Yoga",
-        }} 
-      />
-      <Stack.Screen 
-        name="exercise" 
-        options={{ 
-          title: "Exercise",
-        }} 
-      />
-      <Stack.Screen 
-        name="books" 
-        options={{ 
-          title: "Ancient Books",
-        }} 
-      />
-      <Stack.Screen 
-        name="privacy" 
-        options={{ 
-          title: "Privacy Policy",
-        }} 
-      />
-      <Stack.Screen 
-        name="diet" 
-        options={{ 
-          title: "Diet & Hygiene",
-        }} 
-      />
-      <Stack.Screen 
-        name="importance" 
-        options={{ 
-          title: "Importance of Ayurveda",
-        }} 
-      />
-    </Stack>
+          gestureEnabled: true,
+          animation: 'slide_from_right',
+          presentation: 'card',
+        }}
+      >
+        <Stack.Screen 
+          name="meditation" 
+          options={{ 
+            title: "Meditation",
+          }} 
+        />
+        <Stack.Screen 
+          name="yoga" 
+          options={{ 
+            title: "Yoga",
+          }} 
+        />
+        <Stack.Screen 
+          name="exercise" 
+          options={{ 
+            title: "Exercise",
+          }} 
+        />
+        <Stack.Screen 
+          name="books" 
+          options={{ 
+            title: "Ancient Books",
+          }} 
+        />
+        <Stack.Screen 
+          name="privacy" 
+          options={{ 
+            title: "Privacy Policy",
+          }} 
+        />
+        <Stack.Screen 
+          name="diet" 
+          options={{ 
+            title: "Diet & Hygiene",
+          }} 
+        />
+        <Stack.Screen 
+          name="importance" 
+          options={{ 
+            title: "Importance of Ayurveda",
+          }} 
+        />
+      </Stack>
+      <BottomNavigation />
+    </View>
   );
-} 
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+}); 

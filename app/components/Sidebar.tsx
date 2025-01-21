@@ -10,15 +10,8 @@ import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { Text, Switch } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import AdminLoginModal from './AdminLoginModal';
 
 const drawerItems = [
-	{
-		icon: 'account-key',
-		title: 'Admin',
-		route: '/(drawer)/admin',
-		isAdmin: true,
-	},
 	{
 		icon: 'meditation',
 		title: 'Meditation',
@@ -55,21 +48,16 @@ export default function Sidebar(props: any) {
 	const router = useRouter();
 	const colorScheme = useColorScheme();
 	const [isDarkMode, setIsDarkMode] = React.useState(colorScheme === 'dark');
-	const [adminModalVisible, setAdminModalVisible] = React.useState(false);
 
-	const handleNavigation = (route: string, isAdmin?: boolean) => {
-		if (isAdmin) {
-			setAdminModalVisible(true);
-		} else {
-			props.navigation.closeDrawer();
-			router.push({
-				pathname: route,
-				params: {
-					from: 'drawer',
-					reset: 'true'
-				}
-			});
-		}
+	const handleNavigation = (route: string) => {
+		props.navigation.closeDrawer();
+		router.push({
+			pathname: route,
+			params: {
+				from: 'drawer',
+				reset: 'true'
+			}
+		});
 	};
 
 	const toggleTheme = () => {
@@ -77,87 +65,83 @@ export default function Sidebar(props: any) {
 	};
 
 	return (
-		<>
-			<DrawerContentScrollView 
-				{...props}
-				style={[
-					styles.container,
-					{ backgroundColor: isDarkMode ? '#0B3B2D' : '#E8F5E9' }
-				]}
-			>
-				<View style={styles.header}>
-					<View style={[
-						styles.logoContainer,
-						{ backgroundColor: isDarkMode ? '#0F4D3A' : '#FFFFFF' }
-					]}>
-						<Image
-							source={require('../../assets/images/AdminLogo.jpg')}
-							style={styles.logo}
-						/>
-					</View>
-					<Text style={[
-						styles.headerTitle,
-						{ color: isDarkMode ? '#FFFFFF' : '#0B3B2D' }
-					]}>
-						Charya Ayurveda
-					</Text>
+		<DrawerContentScrollView 
+			{...props}
+			style={[
+				styles.container,
+				{ backgroundColor: isDarkMode ? '#0B3B2D' : '#E8F5E9' }
+			]}
+		>
+			<View style={styles.header}>
+				<View style={[
+					styles.logoContainer,
+					{ backgroundColor: isDarkMode ? '#0F4D3A' : '#FFFFFF' }
+				]}>
+					<Image
+						source={require('../../assets/images/AdminLogo.jpg')}
+						style={styles.logo}
+					/>
 				</View>
+				<Text style={[
+					styles.headerTitle,
+					{ color: isDarkMode ? '#FFFFFF' : '#0B3B2D' }
+				]}>
+					Self Medication
+				</Text>
+			</View>
 
-				<View style={styles.navigationContainer}>
-					{drawerItems.map((item, index) => (
-						<TouchableOpacity
-							key={index}
-							style={[
-								styles.navigationItem,
-								{ backgroundColor: isDarkMode ? '#0F4D3A' : '#FFFFFF' }
-							]}
-							onPress={() => handleNavigation(item.route, item.isAdmin)}
-						>
-							<MaterialCommunityIcons
-								name={item.icon as any}
-								size={24}
-								color={isDarkMode ? '#D4B895' : '#0B3B2D'}
-							/>
-							<Text
-								style={[
-									styles.navigationText,
-									{ color: isDarkMode ? '#FFFFFF' : '#0B3B2D' }
-								]}
-							>
-								{item.title}
-							</Text>
-						</TouchableOpacity>
-					))}
-				</View>
-
-				<View style={styles.footer}>
-					<View style={styles.themeToggle}>
+			<View style={styles.navigationContainer}>
+				{drawerItems.map((item, index) => (
+					<TouchableOpacity
+						key={index}
+						style={[
+							styles.navigationItem,
+							{ backgroundColor: isDarkMode ? '#0F4D3A' : '#FFFFFF' }
+						]}
+						onPress={() => handleNavigation(item.route)}
+					>
 						<MaterialCommunityIcons
-							name={isDarkMode ? 'weather-night' : 'weather-sunny'}
+							name={item.icon as any}
 							size={24}
 							color={isDarkMode ? '#D4B895' : '#0B3B2D'}
+							style={styles.navigationIcon}
 						/>
 						<Text
 							style={[
-								styles.themeText,
+								styles.navigationText,
 								{ color: isDarkMode ? '#FFFFFF' : '#0B3B2D' }
 							]}
+							numberOfLines={1}
 						>
-							Dark Mode
+							{item.title}
 						</Text>
-						<Switch
-							value={isDarkMode}
-							onValueChange={toggleTheme}
-							color="#D4B895"
-						/>
-					</View>
+					</TouchableOpacity>
+				))}
+			</View>
+
+			<View style={styles.footer}>
+				<View style={styles.themeToggle}>
+					<MaterialCommunityIcons
+						name={isDarkMode ? 'weather-night' : 'weather-sunny'}
+						size={24}
+						color={isDarkMode ? '#D4B895' : '#0B3B2D'}
+					/>
+					<Text
+						style={[
+							styles.themeText,
+							{ color: isDarkMode ? '#FFFFFF' : '#0B3B2D' }
+						]}
+					>
+						Dark Mode
+					</Text>
+					<Switch
+						value={isDarkMode}
+						onValueChange={toggleTheme}
+						color="#D4B895"
+					/>
 				</View>
-			</DrawerContentScrollView>
-			<AdminLoginModal
-				visible={adminModalVisible}
-				onDismiss={() => setAdminModalVisible(false)}
-			/>
-		</>
+			</View>
+		</DrawerContentScrollView>
 	);
 }
 
@@ -213,11 +197,21 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.1,
 		shadowRadius: 4,
 	},
+	navigationIcon: {
+		width: 24,
+		height: 24,
+		textAlign: 'center',
+		textAlignVertical: 'center',
+	},
 	navigationText: {
 		marginLeft: 16,
 		fontSize: 16,
 		fontWeight: '500',
 		fontFamily: 'Poppins-Regular',
+		flex: 1,
+		includeFontPadding: false,
+		textAlignVertical: 'center',
+		lineHeight: 24,
 	},
 	footer: {
 		padding: 16,

@@ -1,15 +1,52 @@
 import { useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, ImageBackground } from 'react-native';
+import { View, StyleSheet, ScrollView, ImageBackground, BackHandler } from 'react-native';
 import { Text, Card, IconButton } from 'react-native-paper';
-import { useRouter } from 'expo-router';
+import { useRouter, useNavigation } from 'expo-router';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import symptomsData from '../data/symptoms.json';
+import { useFocusEffect } from '@react-navigation/native';
+
+type Language = 'mr' | 'en';
+
+interface Disorder {
+	disorderId: number;
+	name: string;
+	symptoms: {
+		mr: string[];
+		en: string[];
+	};
+	remedies: {
+		mr: string[];
+		en: string[];
+	};
+}
 
 export default function SymptomsPage() {
 	const { id } = useLocalSearchParams();
 	const router = useRouter();
-	const [language, setLanguage] = useState('mr');
-	const disorder = symptomsData.symptoms.find(s => s.disorderId === Number(id));
+	const navigation = useNavigation();
+	const [language, setLanguage] = useState<Language>('mr');
+	const disorder = symptomsData.symptoms.find(s => s.disorderId === Number(id)) as Disorder | undefined;
+
+	// Handle both hardware back button and UI back button
+	useFocusEffect(
+		React.useCallback(() => {
+			const onBackPress = () => {
+				router.replace('/(tabs)/disorders');
+				return true;
+			};
+
+			BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+			return () =>
+				BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+		}, [])
+	);
+
+	const handleBack = () => {
+		router.replace('/(tabs)/disorders');
+	};
 
 	if (!disorder) {
 		return (
@@ -23,6 +60,11 @@ export default function SymptomsPage() {
 		setLanguage(prev => prev === 'mr' ? 'en' : 'mr');
 	};
 
+	const removeNumbering = (text: string): string => {
+		// Remove Marathi numbers (१. , २. etc) or English numbers (1. , 2. etc)
+		return text.replace(/^[१२३४५६७८९०\d]+\.\s*/, '');
+	};
+
 	return (
 		<View style={styles.container}>
 			<ImageBackground
@@ -34,7 +76,7 @@ export default function SymptomsPage() {
 						icon="arrow-left"
 						iconColor="white"
 						size={24}
-						onPress={() => router.back()}
+						onPress={handleBack}
 						style={styles.backButton}
 					/>
 					<Text variant="headlineMedium" style={styles.headerTitle}>
@@ -60,7 +102,7 @@ export default function SymptomsPage() {
 						</View>
 						{Array.isArray(disorder.symptoms[language]) && disorder.symptoms[language].map((symptom: string, index: number) => (
 							<View key={index.toString()} style={styles.listItem}>
-								<Text style={styles.bullet}>•</Text>
+								<MaterialCommunityIcons name="leaf" size={20} color="#D4B895" style={styles.leafIcon} />
 								<Text style={styles.listText}>{symptom}</Text>
 							</View>
 						))}
@@ -71,7 +113,7 @@ export default function SymptomsPage() {
 					<Card.Content>
 						<View style={styles.cardHeader}>
 							<Text variant="titleLarge" style={styles.remedyTitle}>
-								Ayurvedic Remedies
+								Home Remedies
 							</Text>
 							<IconButton
 								icon="translate"
@@ -83,8 +125,8 @@ export default function SymptomsPage() {
 						</View>
 						{Array.isArray(disorder.remedies[language]) && disorder.remedies[language].map((remedy: string, index: number) => (
 							<View key={index.toString()} style={styles.remedyItem}>
-								<Text style={styles.remedyBullet}>•</Text>
-								<Text style={styles.remedyText}>{remedy}</Text>
+								<MaterialCommunityIcons name="leaf" size={20} color="#D4B895" style={styles.leafIcon} />
+								<Text style={styles.remedyText}>{removeNumbering(remedy)}</Text>
 							</View>
 						))}
 					</Card.Content>
@@ -104,6 +146,10 @@ const additionalStyles = StyleSheet.create({
 	translateButton: {
 		margin: 0,
 		padding: 0,
+	},
+	leafIcon: {
+		marginRight: 12,
+		marginTop: 2,
 	}
 });
 
@@ -153,11 +199,6 @@ const styles = StyleSheet.create({
 		marginBottom: 12,
 		paddingVertical: 4,
 	},
-	bullet: {
-		marginRight: 12,
-		color: '#D4B895',
-		fontSize: 18,
-	},
 	listText: {
 		flex: 1,
 		color: '#444',
@@ -181,11 +222,6 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		marginBottom: 12,
 		paddingVertical: 4,
-	},
-	remedyBullet: {
-		marginRight: 12,
-		color: '#D4B895',
-		fontSize: 18,
 	},
 	remedyText: {
 		flex: 1,

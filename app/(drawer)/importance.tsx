@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, ImageBackground } from 'react-native';
-import { Text, Card } from 'react-native-paper';
+import { Text, Card, List, IconButton } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { DrawerActions } from '@react-navigation/native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ayurvedaImportance = [
 	{
@@ -33,6 +36,13 @@ const principles = [
 ];
 
 export default function ImportanceScreen() {
+	const navigation = useNavigation();
+
+	const openDrawer = () => {
+		// @ts-ignore: dispatch exists but TypeScript doesn't recognize it
+		navigation.dispatch(DrawerActions.openDrawer());
+	};
+
 	return (
 		<View style={styles.container}>
 			<ImageBackground
@@ -40,11 +50,20 @@ export default function ImportanceScreen() {
 				style={styles.header}
 			>
 				<View style={styles.headerOverlay}>
+					<View style={styles.headerTop}>
+						<IconButton
+							icon="menu"
+							iconColor="#FFFFFF"
+							size={28}
+							onPress={openDrawer}
+							style={styles.menuButton}
+						/>
+					</View>
 					<Text variant="headlineMedium" style={styles.headerTitle}>
 						Importance of Ayurveda
 					</Text>
 					<Text style={styles.headerSubtitle}>
-						The Science of Life
+						Ancient Wisdom for Modern Wellness
 					</Text>
 				</View>
 			</ImageBackground>
@@ -64,9 +83,12 @@ export default function ImportanceScreen() {
 				{ayurvedaImportance.map((item, index) => (
 					<Card key={index} style={styles.card}>
 						<Card.Content>
-							<Text variant="titleMedium" style={styles.cardTitle}>
-								{item.title}
-							</Text>
+							<View style={styles.cardHeader}>
+								<MaterialCommunityIcons name="leaf" size={24} color="#D4B895" />
+								<Text variant="titleMedium" style={styles.cardTitle}>
+									{item.title}
+								</Text>
+							</View>
 							<Text style={styles.cardContent}>
 								{item.content}
 							</Text>
@@ -81,9 +103,12 @@ export default function ImportanceScreen() {
 				{principles.map((principle, index) => (
 					<Card key={index} style={styles.card}>
 						<Card.Content>
-							<Text variant="titleMedium" style={styles.cardTitle}>
-								{principle.title}
-							</Text>
+							<View style={styles.cardHeader}>
+								<MaterialCommunityIcons name="yoga" size={24} color="#D4B895" />
+								<Text variant="titleMedium" style={styles.cardTitle}>
+									{principle.title}
+								</Text>
+							</View>
 							<Text style={styles.cardContent}>
 								{principle.content}
 							</Text>
@@ -99,59 +124,86 @@ export default function ImportanceScreen() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#f5f5f5',
+		backgroundColor: '#F3F8F4',
 	},
 	header: {
 		height: 200,
 	},
 	headerOverlay: {
 		height: '100%',
-		backgroundColor: 'rgba(0,0,0,0.4)',
-		justifyContent: 'flex-end',
+		backgroundColor: 'rgba(11, 59, 45, 0.6)',
 		padding: 16,
+	},
+	headerTop: {
+		flexDirection: 'row',
+		justifyContent: 'flex-start',
+		alignItems: 'center',
+		marginTop: 8,
+	},
+	menuButton: {
+		margin: 0,
+		backgroundColor: 'rgba(11, 59, 45, 0.5)',
+		borderRadius: 8,
 	},
 	headerTitle: {
 		color: 'white',
 		fontWeight: 'bold',
 		marginBottom: 8,
+		fontFamily: 'Poppins-Bold',
+		marginTop: 'auto',
 	},
 	headerSubtitle: {
 		color: 'white',
 		fontSize: 16,
+		fontFamily: 'Poppins-Regular',
 	},
 	content: {
 		flex: 1,
 		padding: 16,
 	},
+	contentContainer: {
+		paddingBottom: 24,
+	},
 	introCard: {
-		marginBottom: 24,
-		backgroundColor: '#4CAF50',
+		marginBottom: 16,
+		backgroundColor: '#0B3B2D',
+		borderRadius: 12,
+		elevation: 4,
 	},
 	introText: {
 		color: 'white',
 		fontSize: 16,
 		lineHeight: 24,
+		fontFamily: 'Poppins-Regular',
 	},
 	sectionTitle: {
 		fontWeight: 'bold',
 		marginVertical: 16,
-		color: '#4CAF50',
+		color: '#0B3B2D',
+		fontFamily: 'Poppins-Bold',
 	},
 	card: {
 		marginBottom: 16,
-		elevation: 2,
+		borderRadius: 12,
+		backgroundColor: '#FFFFFF',
+		elevation: 4,
+	},
+	cardHeader: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		marginBottom: 8,
+		gap: 12,
 	},
 	cardTitle: {
-		fontWeight: 'bold',
-		marginBottom: 8,
-		color: '#4CAF50',
+		fontFamily: 'Poppins-Bold',
+		color: '#0B3B2D',
+		flex: 1,
 	},
 	cardContent: {
-		color: '#FFFFFF',
+		color: '#0B3B2D',
 		lineHeight: 22,
-	},
-	contentContainer: {
-		paddingBottom: 24,
+		fontFamily: 'Poppins-Regular',
+		opacity: 0.87,
 	},
 	bottomPadding: {
 		height: 16,

@@ -5,22 +5,22 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BarChart, PieChart } from 'react-native-chart-kit';
 
 const globalStats = {
-  totalPractitioners: '800,000+',
-  annualGrowthRate: '15%',
-  marketSize: '$20B',
+  totalPractitioners: '1.2M+',
+  annualGrowthRate: '16.8%',
+  marketSize: '$9.5B',
   regions: [
-    { name: 'India', percentage: 45, color: '#FF9F40' },
-    { name: 'North America', percentage: 20, color: '#4CAF50' },
-    { name: 'Europe', percentage: 15, color: '#36A2EB' },
-    { name: 'Asia Pacific', percentage: 12, color: '#9966FF' },
-    { name: 'Others', percentage: 8, color: '#FF6384' },
+    { name: 'India', percentage: 55, color: '#FF9F40' },
+    { name: 'North America', percentage: 18, color: '#4CAF50' },
+    { name: 'Europe', percentage: 12, color: '#36A2EB' },
+    { name: 'Asia Pacific', percentage: 10, color: '#9966FF' },
+    { name: 'Others', percentage: 5, color: '#FF6384' },
   ],
   yearlyAdoption: [
-    { year: 2019, users: 40 },
-    { year: 2020, users: 55 },
-    { year: 2021, users: 75 },
-    { year: 2022, users: 90 },
-    { year: 2023, users: 100 },
+    { year: 2019, users: 4.8 },
+    { year: 2020, users: 5.7 },
+    { year: 2021, users: 7.1 },
+    { year: 2022, users: 8.4 },
+    { year: 2023, users: 9.5 },
   ],
 };
 
