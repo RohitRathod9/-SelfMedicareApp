@@ -247,7 +247,7 @@ export default function DietScreen() {
 	return (
 		<View style={styles.container}>
 			<ImageBackground
-				source={require('../../assets/images/Diet&Hygiene.jpg')}
+				source={require('../../assets/images/Diet.jpg')}
 				style={styles.header}
 			>
 				<View style={styles.headerOverlay}>

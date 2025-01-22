@@ -75,18 +75,25 @@ const styles = StyleSheet.create({
 		shadowRadius: 3,
 	},
 	tabLabel: {
-		fontSize: 12,
+		fontSize: 14,
 		marginTop: 4,
-		fontFamily: 'Poppins-Regular',
-		textAlign: 'center'
+		fontFamily: 'Poppins-Medium',
+		textAlign: 'center',
+		includeFontPadding: false,
+		textAlignVertical: 'center',
+		lineHeight: 18,
+		color: '#FFFFFF',
 	},
 	tabItem: {
 		justifyContent: 'center',
 		alignItems: 'center',
 		paddingVertical: 8,
+		height: 65,
+		flexDirection: 'column',
 	},
 	tabContent: {
 		alignItems: 'center',
 		justifyContent: 'center',
+		marginBottom: 2,
 	},
 });

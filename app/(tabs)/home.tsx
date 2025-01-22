@@ -4,7 +4,6 @@ import { Searchbar, Text, IconButton } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useFonts } from 'expo-font';
 import Animated, { 
 	FadeInDown, 
 	FadeInRight,
@@ -65,13 +64,6 @@ export default function HomePage() {
 	const router = useRouter();
 	const navigation = useNavigation();
 	
-	const [fontsLoaded] = useFonts({
-		'Poppins-Bold': require('../../assets/fonts/Poppins-Bold.ttf'),
-		'Poppins-Regular': require('../../assets/fonts/Poppins-Regular.ttf'),
-		'Sanskrit': require('../../assets/fonts/NotoSansDevanagari-Regular.ttf'),
-		'Amita-Bold': require('../../assets/fonts/Amita-Bold.ttf'),
-	});
-	
 	const [searchQuery, setSearchQuery] = useState('');
 	const [showSuggestions, setShowSuggestions] = useState(false);
 	const [filteredDisorders, setFilteredDisorders] = useState<Disorder[]>([]);
@@ -121,10 +113,6 @@ export default function HomePage() {
 		transform: [{ translateX: translateX.value }],
 	}));
 
-	if (!fontsLoaded) {
-		return null;
-	}
-
 	const handleSearch = (query: string) => {
 		setSearchQuery(query);
 		if (query.trim()) {
@@ -149,12 +137,12 @@ export default function HomePage() {
 	return (
 		<View style={styles.container}>
 			<ImageBackground
-				source={require('../../assets/images/Home2.jpg')}
+				source={require('../../assets/images/Home.jpg')}
 				style={styles.header}
 				imageStyle={styles.headerImage}
 			>
 				<View style={[styles.headerOverlay, {
-					backgroundColor: 'rgba(11, 59, 45, 0.4)',
+					backgroundColor: 'rgba(11, 59, 45, 0.2)',
 				}]}>
 					<View style={styles.headerContent}>
 						<IconButton

@@ -202,6 +202,7 @@ const styles = StyleSheet.create({
 		height: 24,
 		textAlign: 'center',
 		textAlignVertical: 'center',
+		
 	},
 	navigationText: {
 		marginLeft: 16,
