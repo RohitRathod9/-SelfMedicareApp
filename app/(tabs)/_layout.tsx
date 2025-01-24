@@ -2,7 +2,7 @@ import { Tabs } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, StyleSheet } from 'react-native';
 
-export default function TabLayout() {
+export default function TabsLayout() {
 	return (
 		<Tabs
 			screenOptions={{
@@ -10,9 +10,6 @@ export default function TabLayout() {
 				tabBarStyle: styles.tabBar,
 				tabBarActiveTintColor: '#D4B895',
 				tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.7)',
-				tabBarShowLabel: true,
-				tabBarLabelStyle: styles.tabLabel,
-				tabBarItemStyle: styles.tabItem,
 			}}
 		>
 			<Tabs.Screen
@@ -20,9 +17,7 @@ export default function TabLayout() {
 				options={{
 					title: 'मुख्यपृष्ठ',
 					tabBarIcon: ({ color }) => (
-						<View style={styles.tabContent}>
-							<MaterialCommunityIcons name="home" size={24} color={color} />
-						</View>
+						<MaterialCommunityIcons name="home" size={24} color={color} />
 					),
 				}}
 			/>
@@ -31,9 +26,7 @@ export default function TabLayout() {
 				options={{
 					title: 'व्याधी',
 					tabBarIcon: ({ color }) => (
-						<View style={styles.tabContent}>
-							<MaterialCommunityIcons name="hospital-box" size={24} color={color} />
-						</View>
+						<MaterialCommunityIcons name="hospital-box" size={24} color={color} />
 					),
 				}}
 			/>
@@ -42,20 +35,16 @@ export default function TabLayout() {
 				options={{
 					title: 'प्रकृती',
 					tabBarIcon: ({ color }) => (
-						<View style={styles.tabContent}>
-							<MaterialCommunityIcons name="account-heart" size={24} color={color} />
-						</View>
+						<MaterialCommunityIcons name="account-heart" size={24} color={color} />
 					),
 				}}
 			/>
 			<Tabs.Screen
-				name="advice"
+				name="सल्ला"
 				options={{
-					title: 'सल्ला',
+					title: 'Advice',
 					tabBarIcon: ({ color }) => (
-						<View style={styles.tabContent}>
-							<MaterialCommunityIcons name="message-text" size={24} color={color} />
-						</View>
+						<MaterialCommunityIcons name="message-text" size={24} color={color} />
 					),
 				}}
 			/>
@@ -73,27 +62,5 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 0, height: -2 },
 		shadowOpacity: 0.2,
 		shadowRadius: 3,
-	},
-	tabLabel: {
-		fontSize: 14,
-		marginTop: 4,
-		fontFamily: 'Poppins-Medium',
-		textAlign: 'center',
-		includeFontPadding: false,
-		textAlignVertical: 'center',
-		lineHeight: 18,
-		color: '#FFFFFF',
-	},
-	tabItem: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		paddingVertical: 8,
-		height: 65,
-		flexDirection: 'column',
-	},
-	tabContent: {
-		alignItems: 'center',
-		justifyContent: 'center',
-		marginBottom: 2,
 	},
 });

@@ -42,9 +42,8 @@ export default function BottomNavigation() {
 		// For drawer routes, we want to keep the last active tab highlighted
 		return false;
 	};
-
 	const handlePress = (path: string) => {
-		router.push(path);
+		router.push(path as any);
 	};
 
 	return (

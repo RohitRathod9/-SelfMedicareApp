@@ -1,38 +1,15 @@
 import { Drawer } from 'expo-router/drawer';
-import { useEffect } from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
-import * as SplashScreen from 'expo-splash-screen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { LogBox } from 'react-native';
+import { Slot } from 'expo-router';
 import 'react-native-gesture-handler';
 import Sidebar from './components/Sidebar';
 
 // Prevent cyclic dependency warnings
-LogBox.ignoreLogs(['Require cycle:']);
-
-// Ensure splash screen stays visible
-SplashScreen.preventAutoHideAsync().catch(() => {
-	/* reloading the app might trigger some race conditions, ignore them */
-});
+LogBox.ignoreLogs(['Require cycle:', 'Sending']);
 
 export default function RootLayout() {
-	useEffect(() => {
-		async function prepare() {
-			try {
-				// Pre-load fonts, make any API calls you need to do here
-				await Promise.all([
-					// Your font loading or other initialization logic here
-				]);
-			} catch (e) {
-				console.warn(e);
-			} finally {
-				await SplashScreen.hideAsync();
-			}
-		}
-
-		prepare();
-	}, []);
-
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
 			<PaperProvider>
@@ -40,6 +17,8 @@ export default function RootLayout() {
 					screenOptions={{
 						headerShown: false,
 						drawerStyle: { width: '75%' },
+						swipeEnabled: true,
+						swipeEdgeWidth: 100,
 					}}
 					drawerContent={(props) => <Sidebar {...props} />}
 				>
@@ -52,6 +31,13 @@ export default function RootLayout() {
 					/>
 					<Drawer.Screen
 						name="(drawer)"
+						options={{
+							headerShown: false,
+							drawerItemStyle: { display: 'none' },
+						}}
+					/>
+					<Drawer.Screen
+						name="index"
 						options={{
 							headerShown: false,
 							drawerItemStyle: { display: 'none' },

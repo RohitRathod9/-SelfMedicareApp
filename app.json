@@ -6,11 +6,6 @@
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/logo.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#FFFFFF"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -30,25 +25,17 @@
       "jsEngine": "hermes"
     },
     "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/logo.png",
-          "resizeMode": "contain",
-          "backgroundColor": "#FFFFFF"
-        }
-      ]
+      "expo-router"
     ],
     "scheme": "charyaayurveda",
     "experiments": {
       "tsconfigPaths": true,
-      "typedRoutes": true,
-      "bridgeless": true
+      "typedRoutes": true
     },
     "extra": {
       "router": {
-        "origin": false
+        "origin": false,
+        "initialRouteName": "(tabs)/home"
       },
       "eas": {
         "projectId": "2bba0a1d-d613-485e-86f1-6c86e0b157e0"
