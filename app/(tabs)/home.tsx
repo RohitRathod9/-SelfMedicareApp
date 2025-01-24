@@ -4,10 +4,10 @@ import { Searchbar, Text, IconButton } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useFonts } from 'expo-font';
 import Animated, { 
 	FadeInDown, 
 	FadeInRight,
-	SlideInRight,
 	withSpring,
 	useAnimatedStyle,
 	withRepeat,
@@ -64,6 +64,13 @@ export default function HomePage() {
 	const router = useRouter();
 	const navigation = useNavigation();
 	
+	const [fontsLoaded] = useFonts({
+		'Poppins-Bold': require('../../assets/fonts/Poppins-Bold.ttf'),
+		'Poppins-Regular': require('../../assets/fonts/Poppins-Regular.ttf'),
+		'Sanskrit': require('../../assets/fonts/NotoSansDevanagari-Regular.ttf'),
+		'Amita-Bold': require('../../assets/fonts/Amita-Bold.ttf'),
+	});
+	
 	const [searchQuery, setSearchQuery] = useState('');
 	const [showSuggestions, setShowSuggestions] = useState(false);
 	const [filteredDisorders, setFilteredDisorders] = useState<Disorder[]>([]);
@@ -112,6 +119,10 @@ export default function HomePage() {
 	const animatedStyle = useAnimatedStyle(() => ({
 		transform: [{ translateX: translateX.value }],
 	}));
+
+	if (!fontsLoaded) {
+		return null;
+	}
 
 	const handleSearch = (query: string) => {
 		setSearchQuery(query);

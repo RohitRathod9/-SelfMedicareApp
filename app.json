@@ -2,14 +2,14 @@
   "expo": {
     "name": "Charya Ayurveda",
     "slug": "charya-ayurveda",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#0B3B2D"
+      "image": "./assets/images/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -24,22 +24,27 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.charyaayurveda.app",
-      "versionCode": 2,
       "permissions": [],
       "softwareKeyboardLayoutMode": "pan",
       "allowBackup": true,
-      "statusBar": {
-        "backgroundColor": "#000000",
-        "translucent": true
-      }
+      "jsEngine": "hermes"
     },
     "plugins": [
       "expo-router",
-      "expo-font"
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/logo.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#FFFFFF"
+        }
+      ]
     ],
+    "scheme": "charyaayurveda",
     "experiments": {
       "tsconfigPaths": true,
-      "typedRoutes": true
+      "typedRoutes": true,
+      "bridgeless": true
     },
     "extra": {
       "router": {
@@ -58,10 +63,7 @@
       "enabled": true,
       "fallbackToCacheTimeout": 0
     },
-    "scheme": "charyaayurveda",
-    "web": {
-      "favicon": "./assets/images/logo.png"
-    },
-    "newArchEnabled": true
+    "newArchEnabled": true,
+    "jsEngine": "hermes"
   }
 }

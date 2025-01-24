@@ -1,88 +1,59 @@
-import { useEffect, useRef } from 'react';
-import { View, StyleSheet, ImageBackground, Animated, TouchableOpacity, BackHandler } from 'react-native';
+import { useEffect, useCallback } from 'react';
+import { View, StyleSheet, ImageBackground, Animated } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text } from 'react-native-paper';
 import * as SplashScreen from 'expo-splash-screen';
-import { useFonts } from 'expo-font';
 
-// Prevent the native splash screen from auto-hiding
-SplashScreen.preventAutoHideAsync();
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync().catch(() => {
+	/* Ignore errors as they only happen during development */
+});
 
 export default function Index() {
 	const router = useRouter();
-	const fadeAnim = useRef(new Animated.Value(0)).current;
-	const buttonScale = useRef(new Animated.Value(1)).current;
-	const isNavigating = useRef(false);
+	const fadeAnim = new Animated.Value(0);
 
-	const [fontsLoaded] = useFonts({
-		'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
-		'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
-		'Sanskrit': require('../assets/fonts/NotoSansDevanagari-Regular.ttf'),
-		'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
-		'Amita-Bold': require('../assets/fonts/Amita-Bold.ttf'),
-	});
-
-	useEffect(() => {
-		// Start our custom animations
-		const fadeIn = Animated.timing(fadeAnim, {
-			toValue: 1,
-			duration: 2000,
-			useNativeDriver: true,
-		});
-
-		const pulseAnimation = Animated.loop(
-			Animated.sequence([
-				Animated.timing(buttonScale, {
-					toValue: 1.1,
-					duration: 1000,
-					useNativeDriver: true,
-				}),
-				Animated.timing(buttonScale, {
-					toValue: 1,
-					duration: 1000,
-					useNativeDriver: true,
-				}),
-			])
-		);
-
-		fadeIn.start();
-		pulseAnimation.start();
-
-		return () => {
-			fadeIn.stop();
-			pulseAnimation.stop();
-		};
-	}, []);
-
-	// Handle back button press
-	useEffect(() => {
-		const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-			if (isNavigating.current) {
-				return true;
-			}
-			BackHandler.exitApp();
-			return true;
-		});
-
-		return () => backHandler.remove();
-	}, []);
-
-	if (!fontsLoaded) {
-		return null;
-	}
-
-	const handleGetStarted = async () => {
-		if (isNavigating.current) return;
-		
+	const onNavigateHome = useCallback(async () => {
 		try {
-			isNavigating.current = true;
-			await router.push('/(tabs)/home');
+			// Navigate to home
+			await router.replace('/(tabs)/home');
 		} catch (error) {
-			console.warn('Navigation error:', error);
-		} finally {
-			isNavigating.current = false;
+			console.error("Navigation error:", error);
+			// Fallback navigation
+			router.push('/(tabs)/home');
 		}
-	};
+	}, [router]);
+
+	useEffect(() => {
+		async function prepare() {
+			try {
+				// Start fade in animation
+				Animated.timing(fadeAnim, {
+					toValue: 1,
+					duration: 800,
+					useNativeDriver: true,
+				}).start();
+
+				// Wait for animation
+				await new Promise(resolve => setTimeout(resolve, 1000));
+
+				// Hide splash screen
+				await SplashScreen.hideAsync();
+
+				// Navigate after a small delay
+				setTimeout(() => {
+					onNavigateHome();
+				}, 200);
+
+			} catch (error) {
+				console.error("Initialization error:", error);
+				// Ensure navigation happens even if there's an error
+				onNavigateHome();
+			}
+		}
+
+		prepare();
+	}, [onNavigateHome]);
 
 	return (
 		<View style={styles.container}>
@@ -92,26 +63,12 @@ export default function Index() {
 				resizeMode="cover"
 			>
 				<Animated.View style={[styles.content, { opacity: fadeAnim }]}>
-					<Text variant="displayLarge" style={[styles.title, { fontFamily: 'Poppins-Bold' }]}>
+					<Text variant="displayLarge" style={styles.title}>
 						Self Medication
 					</Text>
-					<Text variant="titleLarge" style={[styles.subtitle, { fontFamily: 'Poppins-Regular' }]}>
+					<Text variant="titleLarge" style={styles.subtitle}>
 						Ayurveda for Life
 					</Text>
-					<TouchableOpacity
-						onPress={handleGetStarted}
-						style={styles.buttonContainer}
-						activeOpacity={0.8}
-					>
-						<Animated.View
-							style={[
-								styles.button,
-								{ transform: [{ scale: buttonScale }] }
-							]}
-						>
-							<Text style={[styles.buttonText, { fontFamily: 'Poppins-Bold' }]}>Get Started</Text>
-						</Animated.View>
-					</TouchableOpacity>
 				</Animated.View>
 			</ImageBackground>
 		</View>
@@ -121,6 +78,7 @@ export default function Index() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		backgroundColor: '#FFFFFF', // Fallback background color
 	},
 	backgroundImage: {
 		flex: 1,
@@ -137,30 +95,11 @@ const styles = StyleSheet.create({
 		color: '#fff',
 		textAlign: 'center',
 		marginBottom: 10,
-		fontSize: 48,
+		fontWeight: 'bold',
 	},
 	subtitle: {
 		color: '#fff',
 		textAlign: 'center',
 		marginBottom: 40,
-		fontSize: 24,
-	},
-	buttonContainer: {
-		marginTop: 20,
-	},
-	button: {
-		backgroundColor: '#0B3B2D',
-		paddingHorizontal: 40,
-		paddingVertical: 15,
-		borderRadius: 30,
-		elevation: 5,
-		shadowColor: '#000',
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.25,
-		shadowRadius: 3.84,
-	},
-	buttonText: {
-		color: '#fff',
-		fontSize: 18,
 	},
 });
