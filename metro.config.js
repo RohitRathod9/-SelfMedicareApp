@@ -10,7 +10,7 @@ const config = getDefaultConfig(__dirname, {
 // Add custom resolver for navigation packages
 config.resolver.sourceExts = [...config.resolver.sourceExts, 'mjs', 'cjs'];
 
-// Ensure proper handling of Reanimated and Bridgeless mode
+// Ensure proper handling of New Architecture and Reanimated
 config.transformer = {
   ...config.transformer,
   minifierConfig: {

@@ -40,9 +40,9 @@ export default function TabsLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name="सल्ला"
+				name="advice"
 				options={{
-					title: 'Advice',
+					title: 'सल्ला',
 					tabBarIcon: ({ color }) => (
 						<MaterialCommunityIcons name="message-text" size={24} color={color} />
 					),
