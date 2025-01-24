@@ -48,8 +48,6 @@
       "url": "https://u.expo.dev/2bba0a1d-d613-485e-86f1-6c86e0b157e0",
       "enabled": true,
       "fallbackToCacheTimeout": 0
-    },
-    "jsEngine": "hermes",
-    "newArchEnabled": true
+    }
   }
 }
