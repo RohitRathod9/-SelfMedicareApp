@@ -145,6 +145,204 @@ export default function HomePage() {
 		router.push(`/symptoms/${disorderId}`);
 	};
 
+	const styles = StyleSheet.create({
+		container: {
+			flex: 1,
+			backgroundColor: '#F5F5F5',
+		},
+		header: {
+			height: 200,
+			width: '100%',
+		},
+		headerImage: {
+			opacity: 0.9,
+		},
+		headerOverlay: {
+			flex: 1,
+			justifyContent: 'flex-start',
+			padding: 16,
+		},
+		headerContent: {
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center',
+			marginTop: Platform.OS === 'ios' ? 40 : 20,
+		},
+		menuButton: {
+			margin: 0,
+			...Platform.select({
+				web: {
+					cursor: 'pointer',
+				},
+			}),
+		},
+		menuIcon: {
+			boxShadow: '1px 1px 5px rgba(0, 0, 0, 0.75)',
+		},
+		searchBarContainer: {
+			paddingHorizontal: 16,
+			marginTop: -30,
+			zIndex: 1,
+		},
+		searchBar: {
+			borderRadius: 10,
+			elevation: 4,
+			backgroundColor: '#FFFFFF',
+			...Platform.select({
+				ios: {
+					shadowColor: '#000',
+					shadowOffset: { width: 0, height: 2 },
+					shadowOpacity: 0.25,
+					shadowRadius: 3.84,
+				},
+				android: {
+					elevation: 5,
+				},
+				web: {
+					boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+				},
+			}),
+		},
+		content: {
+			flex: 1,
+			paddingHorizontal: 16,
+			paddingTop: 20,
+		},
+		sectionsGrid: {
+			flexDirection: 'row',
+			flexWrap: 'wrap',
+			justifyContent: 'space-between',
+		},
+		sectionCard: {
+			width: '48%',
+			aspectRatio: 0.8,
+			marginBottom: 16,
+			borderRadius: 15,
+			overflow: 'hidden',
+			...Platform.select({
+				ios: {
+					shadowColor: '#000',
+					shadowOffset: { width: 0, height: 2 },
+					shadowOpacity: 0.25,
+					shadowRadius: 3.84,
+				},
+				android: {
+					elevation: 5,
+				},
+				web: {
+					boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+				},
+			}),
+		},
+		sectionImage: {
+			width: '100%',
+			height: '100%',
+		},
+		sectionImageStyle: {
+			borderRadius: 16,
+		},
+		sectionOverlay: {
+			flex: 1,
+			backgroundColor: 'rgba(0, 0, 0, 0.3)',
+			justifyContent: 'center',
+			alignItems: 'center',
+			padding: 16,
+		},
+		sectionTitle: {
+			color: '#FFFFFF',
+			fontSize: 20,
+			fontFamily: 'Poppins-Bold',
+			textAlign: 'center',
+			marginBottom: 8,
+			textShadowColor: 'rgba(0, 0, 0, 0.75)',
+			textShadowOffset: { width: 0, height: 1 },
+			textShadowRadius: 3,
+		},
+		sectionDescription: {
+			color: '#D4B895',
+			fontSize: 14,
+			fontFamily: 'Poppins-Regular',
+			textAlign: 'center',
+			opacity: 2,
+			textShadowColor: 'rgba(0, 0, 0, 0.75)',
+			textShadowOffset: { width: 0, height: 1 },
+			textShadowRadius: 3,
+		},
+		quoteContainer: {
+			paddingVertical: 16,
+			backgroundColor: 'transparent',
+		},
+		quoteContent: {
+			overflow: 'hidden',
+			alignItems: 'center',
+			justifyContent: 'center',
+			height: 70,
+			width: '100%',
+		},
+		quoteText: {
+			color: '#0B3B2D',
+			fontSize: 32,
+			fontFamily: 'Amita-Bold',
+			textAlign: 'center',
+			letterSpacing: 1.5,
+			lineHeight: 48,
+			position: 'absolute',
+			paddingHorizontal: 20,
+			minWidth: 1600,
+		},
+		quoteTranslation: {
+			color: '#FFFFFF666',
+			fontSize: 14,
+			fontFamily: 'Poppins-Regular',
+			fontStyle: 'italic',
+			textAlign: 'center',
+			letterSpacing: 0.5,
+			marginTop: 28,
+		},
+		statsSection: {
+			marginTop: 4,
+			marginBottom: 24,
+		},
+		suggestionsContainer: {
+			position: 'absolute',
+			top: '100%',
+			left: 16,
+			right: 16,
+			backgroundColor: 'white',
+			borderRadius: 12,
+			marginTop: 4,
+			paddingVertical: 8,
+			elevation: 5,
+			shadowColor: '#000',
+			shadowOffset: { width: 0, height: 2 },
+			shadowOpacity: 0.25,
+			shadowRadius: 3.84,
+			maxHeight: 200,
+			borderWidth: 1,
+			borderColor: '#0B3B2D20',
+		},
+		suggestionItem: {
+			flexDirection: 'row',
+			alignItems: 'center',
+			paddingVertical: 12,
+			paddingHorizontal: 16,
+			borderBottomWidth: 1,
+			borderBottomColor: '#f0f0f0',
+		},
+		suggestionText: {
+			marginLeft: 12,
+			fontSize: 16,
+			color: '#0B3B2D',
+			fontFamily: 'Poppins-Regular',
+		},
+		noResultsText: {
+			padding: 16,
+			textAlign: 'center',
+			color: '#FFFFFF',
+			fontFamily: 'Poppins-Regular',
+		},
+	});
+
 	return (
 		<View style={styles.container}>
 			<ImageBackground
@@ -162,19 +360,12 @@ export default function HomePage() {
 									name="menu" 
 									size={32} 
 									color="#FFFFFF" 
-									style={{
-										textShadowColor: 'rgba(0, 0, 0, 0.75)',
-										textShadowOffset: { width: 1, height: 1 },
-										textShadowRadius: 5,
-									}}
+									style={styles.menuIcon}
 								/>
 							)}
 							size={40}
 							iconColor="white"
-							style={[styles.menuButton, {
-								backgroundColor: 'rgba(0, 0, 0, 0.2)',
-								borderRadius: 12,
-							}]}
+							style={styles.menuButton}
 							onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
 						/>
 						
@@ -266,187 +457,3 @@ export default function HomePage() {
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#F3F8F4',
-	},
-	header: {
-		height: 190,
-	},
-	headerImage: {
-		opacity: 0.9,
-	},
-	headerOverlay: {
-		flex: 1,
-
-		paddingTop: Platform.OS === 'ios' ? 40 : 32,
-	},
-	headerContent: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		paddingHorizontal: 8,
-		marginBottom: 16,
-	},
-	menuButton: {
-		margin: 0,
-	},
-	notificationButton: {
-		margin: 0,
-	},
-	searchBarContainer: {
-		position: 'relative',
-		marginTop: -25,
-		zIndex: 2,
-		paddingHorizontal: 16,
-	},
-	searchBar: {
-		borderRadius: 25,
-		elevation: 8,
-		backgroundColor: 'white',
-		shadowColor: '#000',
-		shadowOffset: { width: 0, height: 3 },
-		shadowOpacity: 0.25,
-		shadowRadius: 5,
-		borderWidth: 1.5,
-		borderColor: '#0B3B2D40',
-	},
-	searchInput: {
-		fontFamily: 'Poppins-Regular',
-		fontSize: 16,
-		color: '#0B3B2D',
-		height: 48,
-	},
-	content: {
-		flex: 1,
-	},
-	sectionsGrid: {
-		flexDirection: 'row',
-		flexWrap: 'wrap',
-		padding: 10,
-		justifyContent: 'space-between',
-		marginBottom: 10,
-	},
-	sectionCard: {
-		width: '48%',
-		aspectRatio: 0.8,
-		marginBottom: 9,
-		marginTop: 2,
-		borderRadius: 16,
-		overflow: 'hidden',
-		elevation: 6,
-		shadowColor: '#000',
-		shadowOffset: { width: 0, height: 3 },
-		shadowOpacity: 0.25,
-		shadowRadius: 5,
-	},
-	sectionImage: {
-		width: '100%',
-		height: '100%',
-	},
-	sectionImageStyle: {
-		borderRadius: 16,
-	},
-	sectionOverlay: {
-		flex: 1,
-		backgroundColor: 'rgba(0, 0, 0, 0.3)',
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: 16,
-	},
-	sectionTitle: {
-		color: '#FFFFFF',
-		fontSize: 20,
-		fontFamily: 'Poppins-Bold',
-		textAlign: 'center',
-		marginBottom: 8,
-		textShadowColor: 'rgba(0, 0, 0, 0.75)',
-		textShadowOffset: { width: 0, height: 1 },
-		textShadowRadius: 3,
-	},
-	sectionDescription: {
-		color: '#D4B895',
-		fontSize: 14,
-		fontFamily: 'Poppins-Regular',
-		textAlign: 'center',
-		opacity: 2,
-		textShadowColor: 'rgba(0, 0, 0, 0.75)',
-		textShadowOffset: { width: 0, height: 1 },
-		textShadowRadius: 3,
-	},
-	quoteContainer: {
-		paddingVertical: 16,
-		backgroundColor: 'transparent',
-	},
-	quoteContent: {
-		overflow: 'hidden',
-		alignItems: 'center',
-		justifyContent: 'center',
-		height: 70,
-		width: '100%',
-	},
-	quoteText: {
-		color: '#0B3B2D',
-		fontSize: 32,
-		fontFamily: 'Amita-Bold',
-		textAlign: 'center',
-		letterSpacing: 1.5,
-		lineHeight: 48,
-		position: 'absolute',
-		paddingHorizontal: 20,
-		minWidth: 1600,
-	},
-	quoteTranslation: {
-		color: '#FFFFFF666',
-		fontSize: 14,
-		fontFamily: 'Poppins-Regular',
-		fontStyle: 'italic',
-		textAlign: 'center',
-		letterSpacing: 0.5,
-		marginTop: 28,
-	},
-	statsSection: {
-		marginTop: 4,
-		marginBottom: 24,
-	},
-	suggestionsContainer: {
-		position: 'absolute',
-		top: '100%',
-		left: 16,
-		right: 16,
-		backgroundColor: 'white',
-		borderRadius: 12,
-		marginTop: 4,
-		paddingVertical: 8,
-		elevation: 5,
-		shadowColor: '#000',
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.25,
-		shadowRadius: 3.84,
-		maxHeight: 200,
-		borderWidth: 1,
-		borderColor: '#0B3B2D20',
-	},
-	suggestionItem: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		paddingVertical: 12,
-		paddingHorizontal: 16,
-		borderBottomWidth: 1,
-		borderBottomColor: '#f0f0f0',
-	},
-	suggestionText: {
-		marginLeft: 12,
-		fontSize: 16,
-		color: '#0B3B2D',
-		fontFamily: 'Poppins-Regular',
-	},
-	noResultsText: {
-		padding: 16,
-		textAlign: 'center',
-		color: '#FFFFFF',
-		fontFamily: 'Poppins-Regular',
-	},
-});

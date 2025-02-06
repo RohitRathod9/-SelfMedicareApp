@@ -6,12 +6,22 @@
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.charyaayurveda.app"
+      "bundleIdentifier": "com.charyaayurveda.app",
+      "splash": {
+        "image": "./assets/images/logo.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#FFFFFF"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -19,23 +29,20 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.charyaayurveda.app",
+      "splash": {
+        "image": "./assets/images/logo.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#FFFFFF"
+      },
       "permissions": [],
       "softwareKeyboardLayoutMode": "pan",
       "allowBackup": true,
-      "jsEngine": "hermes"
-    },
-    "plugins": [
-      "expo-router"
-    ],
-    "scheme": "charyaayurveda",
-    "experiments": {
-      "tsconfigPaths": true,
-      "typedRoutes": true
+      "androidStatusBar": {
+        "backgroundColor": "#000000",
+        "translucent": true
+      }
     },
     "extra": {
-      "router": {
-        "origin": false
-      },
       "eas": {
         "projectId": "2bba0a1d-d613-485e-86f1-6c86e0b157e0"
       }
@@ -45,9 +52,15 @@
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/2bba0a1d-d613-485e-86f1-6c86e0b157e0",
-      "enabled": true,
-      "fallbackToCacheTimeout": 0
-    }
+      "url": "https://u.expo.dev/2bba0a1d-d613-485e-86f1-6c86e0b157e0"
+    },
+    "scheme": "charyaayurveda",
+    "web": {
+      "favicon": "./assets/images/logo.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "newArchEnabled": true
   }
 }
