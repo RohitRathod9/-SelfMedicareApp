@@ -371,11 +371,10 @@ export default function HomePage() {
 						
 						<IconButton
 							icon={({ size, color }) => (
-								<MaterialIcons name="notifications" size={30} color="#FFFFFF" />
+								<MaterialIcons name="notifications" size={24} color="#FFFFFF" />
 							)}
-							size={24}
 							iconColor="white"
-							style={styles.notificationButton}
+							style={{ marginRight: 16 }}
 							onPress={() => {/* Handle notifications */}}
 						/>
 					</View>
@@ -388,7 +387,6 @@ export default function HomePage() {
 					onChangeText={handleSearch}
 					value={searchQuery}
 					style={styles.searchBar}
-					inputStyle={styles.searchInput}
 					iconColor="#0B3B2D"
 					placeholderTextColor="#0B3B2D"
 					elevation={4}
@@ -399,6 +397,7 @@ export default function HomePage() {
 						{filteredDisorders.map((disorder) => (
 							<TouchableOpacity
 								key={disorder.id}
+								
 								style={styles.suggestionItem}
 								onPress={() => handleDisorderSelect(disorder.id)}
 							>
